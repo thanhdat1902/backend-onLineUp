@@ -14,11 +14,17 @@ class TestController(private var testService: TestService) {
         return "You are calling api get"
     }
 
+//    @PostMapping
+//    fun getList(@RequestBody req: TestObj): List<TestObj>{
+//        println(req.getId())
+//        println(req.getName())
+//        println(JavaTest.get())
+//
+//        return Arrays.asList(req)
+//    }
+
     @PostMapping
-    fun getList(@RequestBody req: TestObj): List<TestObj>{
-        println(req.getId())
-        println(req.getName())
-        println(JavaTest.get())
-        return Arrays.asList(req)
+    fun testPost(): List<String>{
+        return Arrays.asList("1111","222")
     }
 }
