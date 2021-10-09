@@ -1,5 +1,6 @@
 package com.demo.test
 
+import demo.test.JavaTest
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
@@ -17,6 +18,7 @@ class TestController(private var testService: TestService) {
     fun getList(@RequestBody req: TestObj): List<TestObj>{
         println(req.getId())
         println(req.getName())
+        println(JavaTest.get())
         return Arrays.asList(req)
     }
 }
