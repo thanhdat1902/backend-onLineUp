@@ -3,6 +3,7 @@ package demo.test.controller;
 import demo.test.model.JavaObj;
 import demo.test.repository.JavaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,6 @@ public class JavaController {
 
         userRepository.save(obj);
 
-        return userRepository.findAll();
+        return userRepository.findCustom();
     }
 }
