@@ -22,6 +22,7 @@ services:
     depends_on:
       - docker-my-sql
     environment:
+      - PORT=8080
       - MYSQL_HOST=docker-my-sql
 
 networks:
