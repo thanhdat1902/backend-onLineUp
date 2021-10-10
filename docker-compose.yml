@@ -1,0 +1,28 @@
+version: '3'
+services:
+  docker-my-sql:
+    image: mysql:latest
+    restart: always
+    networks:
+      - docker-network
+    environment:
+      MYSQL_DATABASE: Test
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - 3306:3306
+
+  docker-demo-spring-server:
+    build: .
+    restart: on-failure
+    networks:
+      - docker-network
+    ports:
+      - 8080:8080
+    depends_on:
+      - docker-my-sql
+    environment:
+      - MYSQL_HOST=docker-my-sql
+
+networks:
+  docker-network:
