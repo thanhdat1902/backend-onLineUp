@@ -1,9 +1,14 @@
 package demo.test.repository;
 
 import demo.test.model.JavaObj;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-@Repository
-public interface JavaRepository extends CrudRepository<JavaObj, Long> {
+import java.util.Collection;
+
+public interface JavaRepository extends JpaRepository<JavaObj, Long> {
+    @Query(
+            value = "select * from test_obj_2 where id < 15",
+            nativeQuery = true)
+    Collection<JavaObj> findCustom();
 }
