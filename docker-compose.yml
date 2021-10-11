@@ -7,9 +7,9 @@ services:
       - 8080:8080
     environment:
       - PORT=8080
-      - MYSQL_HOST=b89f8cc4fdfa2f
-      - MYSQL_PORT=0b80dedf@us-cdbr-east-04.cleardb.com
-      - MYSQL_DATABASE=heroku_a1f36265576ea55
+#      - MYSQL_HOST=b89f8cc4fdfa2f
+#      - MYSQL_PORT=0b80dedf@us-cdbr-east-04.cleardb.com
+#      - MYSQL_DATABASE=heroku_a1f36265576ea55
 #    networks:
 #      - docker-network
 #    depends_on:
