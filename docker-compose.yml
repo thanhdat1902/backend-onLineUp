@@ -1,29 +1,31 @@
 version: '3'
 services:
-  docker-my-sql:
-    image: mysql:latest
-    restart: always
-    networks:
-      - docker-network
-    environment:
-      MYSQL_DATABASE: Test
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_ROOT_HOST: '%'
-    ports:
-      - 3306:3306
-
   docker-demo-spring-server:
     build: .
     restart: on-failure
-    networks:
-      - docker-network
     ports:
       - 8080:8080
-    depends_on:
-      - docker-my-sql
     environment:
       - PORT=8080
-      - MYSQL_HOST=docker-my-sql
+      - MYSQL_HOST=b89f8cc4fdfa2f
+      - MYSQL_PORT=0b80dedf@us-cdbr-east-04.cleardb.com
+      - MYSQL_DATABASE=heroku_a1f36265576ea55
+#    networks:
+#      - docker-network
+#    depends_on:
+#      - docker-my-sql
 
-networks:
-  docker-network:
+#  docker-my-sql:
+#    image: mysql:latest
+#    restart: always
+#    networks:
+#      - docker-network
+#    environment:
+#      MYSQL_DATABASE: Test
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_ROOT_HOST: '%'
+#    ports:
+#      - 3306:3306
+
+#networks:
+#  docker-network:

@@ -18,6 +18,5 @@ class KotlinService {
 
     fun getCount(): Long {
         return 0
-        return demoRepository.count()
     }
 }

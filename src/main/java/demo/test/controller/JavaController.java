@@ -23,6 +23,6 @@ public class JavaController {
 
         userRepository.save(obj);
 
-        return userRepository.findCustom();
+        return userRepository.findAll();
     }
 }
