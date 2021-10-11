@@ -12,6 +12,17 @@ public class JavaController {
     @Autowired
     private JavaRepository userRepository;
 
+    @GetMapping(path = "/test")
+    public @ResponseBody
+    Iterable<JavaObj> getAllUser() {
+        JavaObj obj = new JavaObj();
+        obj.setName("Test 1");
+
+        userRepository.save(obj);
+
+        return userRepository.findAll();
+    }
+
     @GetMapping(path = "/all")
     public @ResponseBody
     Iterable<JavaObj> getAllUsers() {
