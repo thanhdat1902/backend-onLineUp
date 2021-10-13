@@ -1,0 +1,20 @@
+Login phase01
+    - userInfo
+        - NanoID
+        - email
+        - sdt
+        - userName
+        - password
+        - Full name
+        - Fb Id
+        - GG Id
+
+        - avatar (app-gen)
+
+    - userOtp
+        - userID
+        - current opt
+
+    - login with email -> BE send otp to email -> user verify otp -> BE send access token (not yet)
+
+    - login with fb, gg -> App sign in with sdk -> get sdk_token -> send sdk token to BE -> BE verify -> send access token (not yet)
