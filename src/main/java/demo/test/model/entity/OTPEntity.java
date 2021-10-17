@@ -1,6 +1,8 @@
 package demo.test.model.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "otp")
@@ -26,11 +28,19 @@ public class OTPEntity {
         this.timeRetry = DEFAULT_RETRY_TIME;
     }
 
-    public void decreaseRetryTime(){
+    public void decreaseRetryTime() {
         this.timeRetry--;
     }
 
-    public String getOTP(){
+    public byte getTimeRetry() {
+        return this.timeRetry;
+    }
+
+    public String getOTP() {
         return this.otp;
+    }
+
+    public long getCreateTime() {
+        return this.createTime;
     }
 }
