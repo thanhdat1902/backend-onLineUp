@@ -1,9 +1,9 @@
 package demo.test.service;
 
-import demo.test.util.NumberUtils;
-import demo.test.util.TimeUtils;
 import demo.test.model.entity.OTPEntity;
 import demo.test.repository.OTPRepository;
+import demo.test.util.NumberUtils;
+import demo.test.util.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +13,14 @@ public class OTPService {
     @Autowired
     private OTPRepository otpRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     public void createForMail(String mail) {
-        OTPEntity otpEntity = new OTPEntity(mail, NumberUtils.generateRandomString(5), TimeUtils.getCurrentTimestamp());
+        String randomOTP = NumberUtils.generateRandomString(6);
+        OTPEntity otpEntity = new OTPEntity(mail, randomOTP, TimeUtils.getCurrentTimestamp());
         otpRepository.save(otpEntity);
+        emailService.sendSimpleEmail("ntlam19@apcs.vn", "Test OTP", "Your OTP is " + randomOTP);
     }
 
     public void removeForEmail(String email) {
