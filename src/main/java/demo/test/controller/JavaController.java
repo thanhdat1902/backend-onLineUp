@@ -1,5 +1,6 @@
 package demo.test.controller;
 
+import demo.test.service.EmailService;
 import demo.test.model.FacebookResponse;
 import demo.test.model.JavaObj;
 import demo.test.repository.JavaRepository;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
 @Controller
 @RequestMapping(path = "/demo")
@@ -20,6 +20,9 @@ public class JavaController {
 
     @Autowired
     private RestService rest;
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping(path = "/test-fb")
     public @ResponseBody
@@ -34,6 +37,8 @@ public class JavaController {
 
 
         FacebookResponse res = rest.restTemplate.getForObject(uri, FacebookResponse.class);
+
+        emailService.sendSimpleEmail("ntlam19@apcs.vn", "Subject", "content");
 
 
         return res;
@@ -50,7 +55,6 @@ public class JavaController {
         return userRepository.findAll();
     }
 }
-
 
 
 //Promise

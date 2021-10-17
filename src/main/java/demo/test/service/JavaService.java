@@ -14,4 +14,3 @@ public class JavaService {
         return javaRepository.count();
     }
 }
-user <-> controller <-> service (logic) <-> repository (db)
