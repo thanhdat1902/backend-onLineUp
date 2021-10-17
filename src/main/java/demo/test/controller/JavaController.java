@@ -1,9 +1,11 @@
 package demo.test.controller;
 
-import demo.test.service.EmailService;
-import demo.test.model.response.FacebookResponse;
 import demo.test.model.entity.JavaObj;
+import demo.test.model.request.TestRequest;
+import demo.test.model.response.FacebookResponse;
+import demo.test.model.response.TestResponse;
 import demo.test.repository.JavaRepository;
+import demo.test.service.EmailService;
 import demo.test.service.OTPService;
 import demo.test.service.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +66,21 @@ public class JavaController {
 
         return userRepository.findAll();
     }
+
+    @PostMapping(path = "/create-opt")
+    @ResponseBody
+    public TestResponse createOTP(@RequestBody TestRequest req) {
+        TestResponse res = new TestResponse();
+        res.params1 =
+                otpService.createForMail(req.params1).getDesc();
+        return res;
+    }
+
+    @PostMapping(path = "/verify-opt")
+    @ResponseBody
+    public TestResponse verifyOTP(@RequestBody TestRequest req) {
+        TestResponse res = new TestResponse();
+        res.params1 = otpService.verifyOtpForEmail(req.params1, req.params2).getDesc();
+        return res;
+    }
 }
-
-
-//Promise
