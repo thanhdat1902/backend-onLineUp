@@ -1,7 +1,5 @@
 package demo.test.service;
 
-import demo.test.model.RequestLogin;
-import demo.test.repository.JavaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +7,17 @@ import org.springframework.stereotype.Service;
 public class LoginService {
 
     @Autowired
-    JavaRepository javaRepository;
+    private OTPService otpService;
 
-    public RequestLogin save(RequestLogin request){
-        return request;
+    //ham handle input email
+    public void handleInputEmail(String email) {
+        if (validateEmail(email)) {
+            otpService.createForMail(email);
+
+        }
+    }
+
+    private boolean validateEmail(String email) {
+        return true;
     }
 }
