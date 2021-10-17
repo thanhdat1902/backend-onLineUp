@@ -16,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @Controller
+@CrossOrigin
 @RequestMapping(path = "/demo")
 public class JavaController {
     @Autowired
