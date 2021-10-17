@@ -1,6 +1,6 @@
 package demo.test.controller;
 
-import demo.test.model.RequestLogin;
+import demo.test.model.request.InputEmailRequest;
 import demo.test.service.LoginService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,10 +14,14 @@ public class LoginController {
 
     LoginService loginService;
 
-    @PostMapping(value = "/getEmail")
+    @PostMapping(value = "/get-email")
     public @ResponseBody
-    RequestLogin getEmail(@RequestBody RequestLogin requestLogin) {
-        System.out.println(requestLogin.getEmail());
+    InputEmailRequest postEmail(@RequestBody InputEmailRequest requestLogin) {
+//        System.out.println(requestLogin.getEmail());
         return requestLogin;
     }
+
+    //Email, email+otp, token-fb, user-password, password-confirm
+    //Reponse cho từng thằng
+    //Tạo OTPController --> postOTP + response khác nhau: status: fail + success, description: ..., msg: tuy vao respon ma truyen vao khac nhau.
 }
