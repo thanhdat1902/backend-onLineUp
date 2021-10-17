@@ -1,9 +1,10 @@
 package demo.test.controller;
 
 import demo.test.service.EmailService;
-import demo.test.model.FacebookResponse;
-import demo.test.model.JavaObj;
+import demo.test.model.response.FacebookResponse;
+import demo.test.model.entity.JavaObj;
 import demo.test.repository.JavaRepository;
+import demo.test.service.OTPService;
 import demo.test.service.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,15 @@ public class JavaController {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private OTPService otpService;
+
+    @GetMapping(path = "/create-otp")
+    public String createOTP() {
+
+        return "";
+    }
+
     @GetMapping(path = "/test-fb")
     public @ResponseBody
     FacebookResponse getUser() {
@@ -38,9 +48,9 @@ public class JavaController {
 
         FacebookResponse res = rest.restTemplate.getForObject(uri, FacebookResponse.class);
 
-        emailService.sendSimpleEmail("ntlam19@apcs.vn", "Subject", "content");
+//        emailService.sendSimpleEmail("ntlam19@apcs.vn", "Subject", "content");
 
-
+        otpService.createForMail("lamnguyem5464@gmail.com");
         return res;
     }
 

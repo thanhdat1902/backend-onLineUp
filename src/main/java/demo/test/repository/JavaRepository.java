@@ -1,6 +1,6 @@
 package demo.test.repository;
 
-import demo.test.model.JavaObj;
+import demo.test.model.entity.JavaObj;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
