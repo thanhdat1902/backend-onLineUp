@@ -69,7 +69,7 @@ public class OTPService {
 
     private OTPEnum checkValidOtp(String otp, OTPEntity otpEntity) {
 
-        if (otpEntity.getTimeRetry() <= 0) {
+        if (otpEntity.getTimeRetry() < 0) {
             return OTPEnum.END_OF_TRY;
         }
 
