@@ -1,9 +1,11 @@
 package demo.test.controller;
 
+import demo.test.model.request.InputEmailOtpRequest;
 import demo.test.model.request.InputEmailRequest;
 import demo.test.model.request.InputFacebookRequest;
 import demo.test.model.request.InputInformationRequest;
-import demo.test.service.LoginService;
+import demo.test.service.OTPService;
+import demo.test.service.SignupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,14 +18,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class SignUpController {
 
     @Autowired
-    LoginService loginService;
+    SignupService signupService;
+    @Autowired
+    OTPService otpService;
 
+    //Receive email --> validate --> send OTP --> response(success or fail)
     @PostMapping(value = "/post-email")
     public @ResponseBody
-    InputEmailRequest postEmail(@RequestBody InputEmailRequest requestLogin) {
-        loginService.handleInputEmail(requestLogin.getEmail());
-        //System.out.println(requestLogin.getEmail());
-        return requestLogin;
+    String postEmail(@RequestBody InputEmailRequest requestLogin) {
+        if (signupService.handleInputEmail(requestLogin.getEmail())) {
+            return "Success";
+        }
+        return "Wrong format email";
+    }
+
+    //verify otp
+    @PostMapping(path = "/verify-otp")
+    public @ResponseBody
+    String verifyOTP(@RequestBody InputEmailOtpRequest req) {
+        return otpService.verifyOtpForEmail(req.email, req.otp).getDesc();
+    }
+
+    @PostMapping(value = "/create-account")
+    public @ResponseBody
+    String postInformation(@RequestBody InputInformationRequest requestInformation) {
+        if (signupService.handleCreateAccount(requestInformation.username, requestInformation.password, requestInformation.confirmPassword))
+            return "Success";
+        return "Fail";
     }
 
     @PostMapping(value = "/use-facebook")
@@ -32,11 +53,7 @@ public class SignUpController {
         return requestFacebook;
     }
 
-    @PostMapping(value = "/information")
-    public @ResponseBody
-    InputInformationRequest postInformation(@RequestBody InputInformationRequest requestInformation) {
-        return requestInformation;
-    }
+
     //Email, email+otp, token-fb, user-password + password-confirm
     //Reponse cho từng thằng
     //Tạo OTPController --> postOTP + response khác nhau: status: fail + success, description: ..., msg: tuy vao respon ma truyen vao khac nhau.
