@@ -1,9 +1,9 @@
 package demo.test.service;
 
-import demo.test.util.NumberUtils;
-import demo.test.util.TimeUtils;
 import demo.test.model.entity.OTPEntity;
 import demo.test.repository.OTPRepository;
+import demo.test.util.NumberUtils;
+import demo.test.util.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +34,23 @@ public class OTPService {
             }
         }
         return false;
+    }
+
+    public int responseVerifyOtpEmail(String email, String otp) {
+        if (email != null) {
+            OTPEntity otpEntity = otpRepository.getById(email);
+            if (otpEntity.getTimeRetry() == 0) {
+                return 2;
+            } else {
+                if (otpEntity.getOTP().equals(otp)) {
+                    return 3;
+                } else {
+                    otpEntity.decreaseRetryTime();
+                    return 4;
+                }
+            }
+
+        }
+        return 1;
     }
 }
