@@ -1,10 +1,10 @@
-package demo.test.model;
+package demo.test.model.entity;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "User")
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -21,11 +21,11 @@ public class User {
         this.id = id;
     }
 
-    public User() {
+    public UserEntity() {
 
     }
 
-    public User(String username, String password, String email) {
+    public UserEntity(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
