@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/signup")
+@RequestMapping("/sign:up")
 public class LoginController {
 
     LoginService loginService;
@@ -24,4 +24,5 @@ public class LoginController {
     //Email, email+otp, token-fb, user-password, password-confirm
     //Reponse cho từng thằng
     //Tạo OTPController --> postOTP + response khác nhau: status: fail + success, description: ..., msg: tuy vao respon ma truyen vao khac nhau.
+    //Sign-in: email + password
 }
