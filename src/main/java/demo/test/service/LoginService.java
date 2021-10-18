@@ -12,8 +12,8 @@ public class LoginService {
     //ham handle input email
     public void handleInputEmail(String email) {
         if (validateEmail(email)) {
+            System.out.println("Inside function");
             otpService.createForMail(email);
-
         }
     }
 
