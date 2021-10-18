@@ -39,6 +39,7 @@ public class SignUpController {
         return otpService.verifyOtpForEmail(req.email, req.otp).getDesc();
     }
 
+    //input username, password and confirm password
     @PostMapping(value = "/create-account")
     public @ResponseBody
     String postInformation(@RequestBody InputInformationRequest requestInformation) {
@@ -47,7 +48,6 @@ public class SignUpController {
             return "Success";
         }
         return "Fail";
-        //return requestInformation;
     }
 
     @PostMapping(value = "/use-facebook")

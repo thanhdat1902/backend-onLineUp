@@ -1,5 +1,6 @@
 package demo.test.model.request;
 
+//haven't used yet
 public class InputFacebookRequest {
     private String facebookToken;
 
