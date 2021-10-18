@@ -9,6 +9,9 @@ public class SignupService {
     @Autowired
     private OTPService otpService;
 
+    @Autowired
+    private ProfileService profileService;
+
     //ham handle input email
     public boolean handleInputEmail(String email) {
         if (validateEmail(email)) {
@@ -23,10 +26,11 @@ public class SignupService {
         return email.matches(regex);
     }
 
-    public boolean handleCreateAccount(String username, String password, String confirmPassword) {
-        if (password != confirmPassword) return false;
+    public boolean handleCreateAccount(String username, String email, String password, String confirmPassword) {
+        //? username có unique không? Chưa biết
+        if (!password.equals(confirmPassword)) return false;
         else {
-
+            profileService.createAccount(username, password, email);
         }
         return true;
     }

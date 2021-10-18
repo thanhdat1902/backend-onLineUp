@@ -3,8 +3,8 @@ package demo.test.model.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "User")
-public class UserEntity {
+@Table(name = "Profile")
+public class ProfileEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -21,11 +21,11 @@ public class UserEntity {
         this.id = id;
     }
 
-    public UserEntity() {
+    public ProfileEntity() {
 
     }
 
-    public UserEntity(String username, String password, String email) {
+    public ProfileEntity(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;

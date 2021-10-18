@@ -42,9 +42,12 @@ public class SignUpController {
     @PostMapping(value = "/create-account")
     public @ResponseBody
     String postInformation(@RequestBody InputInformationRequest requestInformation) {
-        if (signupService.handleCreateAccount(requestInformation.username, requestInformation.password, requestInformation.confirmPassword))
+        if (signupService.handleCreateAccount(requestInformation.username, requestInformation.email,
+                requestInformation.password, requestInformation.confirmPassword)) {
             return "Success";
+        }
         return "Fail";
+        //return requestInformation;
     }
 
     @PostMapping(value = "/use-facebook")
