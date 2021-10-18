@@ -39,4 +39,9 @@ public class OTPEntity {
     public byte getTimeRetry() {
         return this.timeRetry;
     }
+
+    public long getCreateTime() {
+        return this.createTime;
+
+    }
 }
