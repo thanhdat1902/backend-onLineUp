@@ -1,4 +1,4 @@
-package demo.test.model;
+package demo.test.model.entity;
 
 import javax.persistence.*;
 
