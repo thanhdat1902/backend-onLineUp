@@ -11,4 +11,9 @@ public interface JavaRepository extends JpaRepository<JavaObj, Long> {
             value = "select * from test_obj_2 where id < 15",
             nativeQuery = true)
     Collection<JavaObj> findCustom();
+
+    @Query(
+            value = "select * from test_obj_2 where id < 15",
+            nativeQuery = true)
+    Collection<JavaObj> findA();
 }
