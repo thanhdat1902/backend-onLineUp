@@ -1,11 +1,14 @@
 package demo.test.controller;
 
+import demo.test.constant.OTPEnum;
 import demo.test.model.request.InputEmailOtpRequest;
 import demo.test.model.request.InputEmailRequest;
 import demo.test.model.request.InputFacebookRequest;
 import demo.test.model.request.InputInformationRequest;
+import demo.test.model.response.BaseResponse;
 import demo.test.service.OTPService;
 import demo.test.service.SignupService;
+import demo.test.util.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,8 +38,8 @@ public class SignUpController {
     //verify otp
     @PostMapping(path = "/verify-otp")
     public @ResponseBody
-    String verifyOTP(@RequestBody InputEmailOtpRequest req) {
-        return otpService.verifyOtpForEmail(req.email, req.otp).getDesc();
+    OTPEnum verifyOTP(@RequestBody InputEmailOtpRequest req) {
+        return otpService.verifyOtpForEmail(req.email, req.otp);
     }
 
     //input username, password and confirm password
@@ -48,6 +51,13 @@ public class SignUpController {
             return "Success";
         }
         return "Fail";
+    }
+
+    @PostMapping(value = "/test-base-response")
+    public @ResponseBody
+    BaseResponse<InputEmailOtpRequest> testTingGson(@RequestBody InputEmailOtpRequest request) {
+        BaseResponse<InputEmailOtpRequest> a = new BaseResponse<InputEmailOtpRequest>(request, TimeUtils.getCurrentTimestamp());
+        return a;
     }
 
     @PostMapping(value = "/use-facebook")

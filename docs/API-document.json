@@ -41,7 +41,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\",\r\n    \"otp\": \"589072\"\r\n}",
+							"raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\",\r\n    \"otp\": \"293395\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -81,6 +81,32 @@
 							],
 							"path": [
 								"create-account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[sign-up/test-base-response]: test BaseResponse",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\",\r\n    \"otp\": \"293395\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL-Local}}sign-up/test-base-response",
+							"host": [
+								"{{URL-Local}}sign-up"
+							],
+							"path": [
+								"test-base-response"
 							]
 						}
 					},
