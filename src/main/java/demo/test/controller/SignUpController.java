@@ -28,18 +28,23 @@ public class SignUpController {
     //Receive email --> validate --> send OTP --> response(success or fail)
     @PostMapping(value = "/post-email")
     public @ResponseBody
-    String postEmail(@RequestBody InputEmailRequest requestLogin) {
-        if (signupService.handleInputEmail(requestLogin.getEmail())) {
-            return "Success";
-        }
-        return "Wrong format email";
+    OTPEnum postEmail(@RequestBody InputEmailRequest requestLogin) {
+//        if (signupService.handleInputEmail(requestLogin.getEmail())) {
+//            return "Success";
+//        }
+//        return "Wrong format email";
+        return otpService.createForMail(requestLogin.getEmail());
     }
 
     //verify otp
     @PostMapping(path = "/verify-otp")
     public @ResponseBody
-    OTPEnum verifyOTP(@RequestBody InputEmailOtpRequest req) {
-        return otpService.verifyOtpForEmail(req.email, req.otp);
+    BaseResponse<?> verifyOTP(@RequestBody InputEmailOtpRequest req) {
+        OTPEnum status = otpService.verifyOtpForEmail(req.email, req.otp);
+        BaseResponse<?> res = new BaseResponse<>();
+        res.code = status.getDescCode();
+        res.desc = status.getDesc();
+        return res;
     }
 
     //input username, password and confirm password
