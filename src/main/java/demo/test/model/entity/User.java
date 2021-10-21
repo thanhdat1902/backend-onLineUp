@@ -1,4 +1,6 @@
-package demo.test.model.db;
+package demo.test.model.entity;
+
+import demo.test.model.db.Role;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -30,6 +32,7 @@ public class User {
     public String getUsername() {
         return username;
     }
+
     public void setUsername(String name) {
         this.username = username;
     }
@@ -37,6 +40,7 @@ public class User {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -62,7 +66,7 @@ public class User {
     }
 
     public void setRoles(Set<Role> roles) {
-        this.roles= roles;
+        this.roles = roles;
     }
 
     public void setEmail(String email) {
