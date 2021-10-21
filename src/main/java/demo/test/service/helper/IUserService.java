@@ -1,6 +1,6 @@
 package demo.test.service.helper;
 
-import demo.test.model.db.User;
+import demo.test.model.entity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Optional;

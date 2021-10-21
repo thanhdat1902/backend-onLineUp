@@ -52,8 +52,8 @@ public class JavaController {
         FacebookResponse res = rest.restTemplate.getForObject(uri, FacebookResponse.class);
 
 //        emailService.sendSimpleEmail("ntlam19@apcs.vn", "Subject", "content");
+//        otpService.createForMail("lamnguyem5464@gmail.com");
 
-        otpService.createForMail("lamnguyem5464@gmail.com");
         return res;
     }
 

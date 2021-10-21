@@ -1,6 +1,6 @@
 package demo.test.service;
 
-import demo.test.model.db.User;
+import demo.test.model.entity.User;
 import demo.test.model.helper.UserPrinciple;
 import demo.test.repository.UserRepository;
 import demo.test.service.helper.IUserService;

@@ -4,6 +4,7 @@ import demo.test.model.request.InputEmailOtpRequest;
 import demo.test.model.request.InputEmailRequest;
 import demo.test.model.request.InputFacebookRequest;
 import demo.test.model.request.InputInformationRequest;
+import demo.test.service.JwtService;
 import demo.test.service.OTPService;
 import demo.test.service.SignupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class SignUpController {
     SignupService signupService;
     @Autowired
     OTPService otpService;
+    @Autowired
+    JwtService jwtService;
 
     //Receive email --> validate --> send OTP --> response(success or fail)
     @PostMapping(value = "/post-email")

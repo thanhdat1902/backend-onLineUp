@@ -1,6 +1,6 @@
 package demo.test.controller;
 
-import demo.test.model.db.User;
+import demo.test.model.entity.User;
 import demo.test.model.response.JwtResponse;
 import demo.test.service.JwtService;
 import demo.test.service.helper.IUserService;
@@ -26,7 +26,8 @@ public class LoginController {
     private JwtService jwtService;
     @Autowired
     private AuthenticationManager authenticationManager;
-    @PostMapping ("/login")
+
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
