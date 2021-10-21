@@ -6,15 +6,17 @@ import demo.test.model.request.InputEmailRequest;
 import demo.test.model.request.InputFacebookRequest;
 import demo.test.model.request.InputInformationRequest;
 import demo.test.model.response.BaseResponse;
+import demo.test.model.response.FacebookResponse;
 import demo.test.service.OTPService;
+import demo.test.service.RestService;
 import demo.test.service.SignupService;
 import demo.test.util.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 @Controller
 @RequestMapping("/sign-up")
@@ -24,6 +26,8 @@ public class SignUpController {
     SignupService signupService;
     @Autowired
     OTPService otpService;
+    @Autowired
+    RestService rest;
 
     //Receive email --> validate --> send OTP --> response(success or fail)
     @PostMapping(value = "/post-email")
@@ -51,6 +55,26 @@ public class SignUpController {
             return "Success";
         }
         return "Fail";
+    }
+
+    @GetMapping(path = "/test-fb")
+    public @ResponseBody
+    FacebookResponse getUser() {
+
+        URI uri = UriComponentsBuilder
+                .fromUriString("https://graph.facebook.com/me")
+                .queryParam("fields", "email")
+                .queryParam("access_token", "GGQVlaMU5DYXg0M2tyTVJhZAXlBTTNpMDBTWktLVzM1T2VyZA3VnNk5ObkhXbzJOYWF2OHJQRk05dG1NSnpUTW9fVV94N2RGR0s5clBMRzVZAclVKR3UxbHpXb1VPMlByWTVKTHdqbHJjWkpnWUpJVWtiZAElNUVdHdXl5NTN0NUdPX0hGWjVnTU50eS1UckR3ck1SY3J3b3V0TTdLRmZAUbFEZD")
+                .build()
+                .toUri();
+
+
+        FacebookResponse res = rest.restTemplate.getForObject(uri, FacebookResponse.class);
+
+//        emailService.sendSimpleEmail("ntlam19@apcs.vn", "Subject", "content");
+
+//        otpService.createForMail("lamnguyem5464@gmail.com");
+        return res;
     }
 
     @PostMapping(value = "/test-base-response")
