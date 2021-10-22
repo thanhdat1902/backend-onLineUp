@@ -9,8 +9,8 @@ import demo.test.model.response.BaseResponse;
 import demo.test.model.response.FacebookResponse;
 import demo.test.service.authentication.OTPService;
 import demo.test.service.authentication.SignupService;
+import demo.test.service.utilities.EmailService;
 import demo.test.service.utilities.RestService;
-import demo.test.util.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,12 +31,19 @@ public class SignUpController {
     OTPService otpService;
     @Autowired
     RestService rest;
+    @Autowired
+    EmailService emailService;
 
     //Receive email --> validate --> send OTP --> response(success or fail)
     @PostMapping(value = "/post-email")
     @ResponseBody
     public BaseResponse<?> postEmail(@RequestBody InputEmailRequest requestLogin) {
         //TODO: need to check existing users
+        //Done
+        if (emailService.existingEmail(requestLogin.email)) {
+            OTPEnum error = OTPEnum.INVALID_EMAIL;
+            return new BaseResponse<>(error.getDescCode(), error.getDesc(), null);
+        }
         OTPEnum status = signupService.handleInputEmailForOTP(requestLogin.email);
         return new BaseResponse<>(status.getDescCode(), status.getDesc(), null);
     }
