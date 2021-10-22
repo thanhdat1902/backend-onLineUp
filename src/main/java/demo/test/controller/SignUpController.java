@@ -39,7 +39,7 @@ public class SignUpController {
     @ResponseBody
     public BaseResponse<?> postEmail(@RequestBody InputEmailRequest requestLogin) {
         //TODO: need to check existing users
-        //Done
+        //Done / not test yet
         if (emailService.existingEmail(requestLogin.email)) {
             OTPEnum error = OTPEnum.INVALID_EMAIL;
             return new BaseResponse<>(error.getDescCode(), error.getDesc(), null);
@@ -71,6 +71,10 @@ public class SignUpController {
 
         FacebookResponse res = rest.restTemplate.getForObject(uri, FacebookResponse.class);
         //TODO need to check existing user
+        //done / not test yet
+        if (emailService.existingEmail(res.email)) {
+            return new BaseResponse<FacebookResponse>("fail", "Already exist email", null);
+        }
         return new BaseResponse<FacebookResponse>(res);
     }
 
