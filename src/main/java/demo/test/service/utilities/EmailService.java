@@ -1,4 +1,4 @@
-package demo.test.service;
+package demo.test.service.utilities;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSendException;

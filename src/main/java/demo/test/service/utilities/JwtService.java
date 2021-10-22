@@ -1,4 +1,4 @@
-package demo.test.service;
+package demo.test.service.utilities;
 
 
 import demo.test.model.helper.UserPrinciple;
@@ -20,7 +20,7 @@ import java.util.Map;
 @Service
 public class JwtService {
     private static final String secret = "nguyenthanhdat19022001@gmail.com";
-    private static final long EXPIRE_TIME = 60*60*1000;
+    private static final long EXPIRE_TIME = 60 * 60 * 1000;
     private static final Logger logger = LoggerFactory.getLogger(JwtService.class.getName());
 
     // Generate token
@@ -35,16 +35,19 @@ public class JwtService {
         final Claims claims = getAllClaimsFromToken(token);
         return claims.getExpiration();
     }
+
     // Get username login
     public String getUserNameFromJwtToken(String token) {
         final Claims claims = getAllClaimsFromToken(token);
         return claims.getSubject();
     }
+
     // Bool Token expired
     private Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
+
     // Bool Validate token
     public boolean validateJwtToken(String authToken) {
         try {
@@ -63,6 +66,7 @@ public class JwtService {
         }
         return false;
     }
+
     // Helper function
     private Claims getAllClaimsFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
@@ -73,8 +77,9 @@ public class JwtService {
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_TIME))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
+
     private Key getSigningKey() {
-        byte[] keyBytes = this.secret.getBytes(StandardCharsets. UTF_8 );
+        byte[] keyBytes = this.secret.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }

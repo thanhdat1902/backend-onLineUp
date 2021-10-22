@@ -1,5 +1,6 @@
-package demo.test.service;
+package demo.test.service.authentication;
 
+import demo.test.service.database.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
