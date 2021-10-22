@@ -1,8 +1,9 @@
-package demo.test.service;
+package demo.test.service.authentication;
 
 import demo.test.constant.OTPEnum;
 import demo.test.model.entity.OTPEntity;
 import demo.test.repository.OTPRepository;
+import demo.test.service.utilities.EmailService;
 import demo.test.util.NumberUtils;
 import demo.test.util.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package demo.test.service;
+package demo.test.service.database;
 
 import demo.test.model.entity.ProfileEntity;
 import demo.test.repository.ProfileRepository;

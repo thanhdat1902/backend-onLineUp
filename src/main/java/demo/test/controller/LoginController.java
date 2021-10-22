@@ -2,8 +2,8 @@ package demo.test.controller;
 
 import demo.test.model.db.User;
 import demo.test.model.response.JwtResponse;
-import demo.test.service.JwtService;
 import demo.test.service.helper.IUserService;
+import demo.test.service.utilities.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,7 +26,8 @@ public class LoginController {
     private JwtService jwtService;
     @Autowired
     private AuthenticationManager authenticationManager;
-    @PostMapping ("/login")
+
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));

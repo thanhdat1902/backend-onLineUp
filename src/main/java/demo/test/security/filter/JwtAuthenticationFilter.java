@@ -1,7 +1,7 @@
 package demo.test.security.filter;
 
-import demo.test.service.JwtService;
 import demo.test.service.helper.IUserService;
+import demo.test.service.utilities.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -1,4 +1,4 @@
-package demo.test.service;
+package demo.test.service.utilities;
 
 import demo.test.model.response.FacebookResponse;
 import org.springframework.boot.web.client.RestTemplateBuilder;

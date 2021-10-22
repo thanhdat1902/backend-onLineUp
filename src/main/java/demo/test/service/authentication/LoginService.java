@@ -1,4 +1,4 @@
-package demo.test.service;
+package demo.test.service.authentication;
 
 import demo.test.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
