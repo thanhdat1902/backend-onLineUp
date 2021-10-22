@@ -34,25 +34,27 @@ public class SignUpController {
 
     //Receive email --> validate --> send OTP --> response(success or fail)
     @PostMapping(value = "/post-email")
-    public @ResponseBody
-    String postEmail(@RequestBody InputEmailRequest requestLogin) {
-        if (signupService.handleInputEmail(requestLogin.email)) {
-            return "Success";
-        }
-        return "Wrong format email";
+    @ResponseBody
+    public BaseResponse<?> postEmail(@RequestBody InputEmailRequest requestLogin) {
+        //TODO: need to check existing users
+        OTPEnum status = signupService.handleInputEmailForOTP(requestLogin.email);
+        return new BaseResponse<>(status.getDescCode(), status.getDesc(), null);
     }
 
     //verify otp
     @PostMapping(path = "/verify-otp")
-    public @ResponseBody
-    OTPEnum verifyOTP(@RequestBody InputEmailOtpRequest req) {
-        return otpService.verifyOtpForEmail(req.email, req.otp);
+    @ResponseBody
+    public BaseResponse<?> verifyOTP(@RequestBody InputEmailOtpRequest req) {
+        OTPEnum status = otpService.verifyOtpForEmail(req.email, req.otp);
+
+        //TODO return token here
+        return new BaseResponse<>(status.getDescCode(), status.getDesc(), null);
     }
 
     //use facebook to sign up
     @PostMapping(path = "/use-facebook")
-    public @ResponseBody
-    FacebookResponse getUserInformation(@RequestBody InputFacebookRequest facebookRequest) {
+    @ResponseBody
+    public BaseResponse<FacebookResponse> getUserInformation(@RequestBody InputFacebookRequest facebookRequest) {
         URI uri = UriComponentsBuilder
                 .fromUriString("https://graph.facebook.com/me")
                 .queryParam("fields", "email")
@@ -61,7 +63,8 @@ public class SignUpController {
                 .toUri();
 
         FacebookResponse res = rest.restTemplate.getForObject(uri, FacebookResponse.class);
-        return res;
+        //TODO need to check existing user
+        return new BaseResponse<FacebookResponse>(res);
     }
 
     //input username, password and confirm password
@@ -73,12 +76,5 @@ public class SignUpController {
             return "Success";
         }
         return "Fail";
-    }
-
-    @PostMapping(value = "/test-base-response")
-    public @ResponseBody
-    BaseResponse<InputEmailOtpRequest> testTingGson(@RequestBody InputEmailOtpRequest request) {
-        BaseResponse<InputEmailOtpRequest> a = new BaseResponse<InputEmailOtpRequest>(request, TimeUtils.getCurrentTimestamp());
-        return a;
     }
 }
