@@ -16,4 +16,12 @@ public class ProfileService {
         ProfileEntity user = new ProfileEntity(username, password, email);
         profileRepository.save(user);
     }
+
+    public boolean existingEmail(String email) {
+        ProfileEntity user = profileRepository.getById(email);
+        if (user == null) {
+            return false;
+        }
+        return true;
+    }
 }
