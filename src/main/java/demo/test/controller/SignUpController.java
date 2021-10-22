@@ -13,7 +13,10 @@ import demo.test.service.SignupService;
 import demo.test.util.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -33,7 +36,7 @@ public class SignUpController {
     @PostMapping(value = "/post-email")
     public @ResponseBody
     String postEmail(@RequestBody InputEmailRequest requestLogin) {
-        if (signupService.handleInputEmail(requestLogin.getEmail())) {
+        if (signupService.handleInputEmail(requestLogin.email)) {
             return "Success";
         }
         return "Wrong format email";
@@ -44,6 +47,21 @@ public class SignUpController {
     public @ResponseBody
     OTPEnum verifyOTP(@RequestBody InputEmailOtpRequest req) {
         return otpService.verifyOtpForEmail(req.email, req.otp);
+    }
+
+    //use facebook to sign up
+    @PostMapping(path = "/use-facebook")
+    public @ResponseBody
+    FacebookResponse getUserInformation(@RequestBody InputFacebookRequest facebookRequest) {
+        URI uri = UriComponentsBuilder
+                .fromUriString("https://graph.facebook.com/me")
+                .queryParam("fields", "email")
+                .queryParam("access_token", facebookRequest.facebookToken)
+                .build()
+                .toUri();
+
+        FacebookResponse res = rest.restTemplate.getForObject(uri, FacebookResponse.class);
+        return res;
     }
 
     //input username, password and confirm password
@@ -57,42 +75,10 @@ public class SignUpController {
         return "Fail";
     }
 
-    @GetMapping(path = "/test-fb")
-    public @ResponseBody
-    FacebookResponse getUser() {
-
-        URI uri = UriComponentsBuilder
-                .fromUriString("https://graph.facebook.com/me")
-                .queryParam("fields", "email")
-                .queryParam("access_token", "GGQVlaMU5DYXg0M2tyTVJhZAXlBTTNpMDBTWktLVzM1T2VyZA3VnNk5ObkhXbzJOYWF2OHJQRk05dG1NSnpUTW9fVV94N2RGR0s5clBMRzVZAclVKR3UxbHpXb1VPMlByWTVKTHdqbHJjWkpnWUpJVWtiZAElNUVdHdXl5NTN0NUdPX0hGWjVnTU50eS1UckR3ck1SY3J3b3V0TTdLRmZAUbFEZD")
-                .build()
-                .toUri();
-
-
-        FacebookResponse res = rest.restTemplate.getForObject(uri, FacebookResponse.class);
-
-//        emailService.sendSimpleEmail("ntlam19@apcs.vn", "Subject", "content");
-
-//        otpService.createForMail("lamnguyem5464@gmail.com");
-        return res;
-    }
-
     @PostMapping(value = "/test-base-response")
     public @ResponseBody
     BaseResponse<InputEmailOtpRequest> testTingGson(@RequestBody InputEmailOtpRequest request) {
         BaseResponse<InputEmailOtpRequest> a = new BaseResponse<InputEmailOtpRequest>(request, TimeUtils.getCurrentTimestamp());
         return a;
     }
-
-    @PostMapping(value = "/use-facebook")
-    public @ResponseBody
-    InputFacebookRequest postFacebook(@RequestBody InputFacebookRequest requestFacebook) {
-        return requestFacebook;
-    }
-
-
-    //Email, email+otp, token-fb, user-password + password-confirm
-    //Reponse cho từng thằng
-    //Tạo OTPController --> postOTP + response khác nhau: status: fail + success, description: ..., msg: tuy vao respon ma truyen vao khac nhau.
-    //Sign-in: email + password
 }
