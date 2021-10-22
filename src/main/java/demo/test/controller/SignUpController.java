@@ -9,7 +9,7 @@ import demo.test.model.response.BaseResponse;
 import demo.test.model.response.FacebookResponse;
 import demo.test.service.authentication.OTPService;
 import demo.test.service.authentication.SignupService;
-import demo.test.service.utilities.EmailService;
+import demo.test.service.database.ProfileService;
 import demo.test.service.utilities.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +32,7 @@ public class SignUpController {
     @Autowired
     RestService rest;
     @Autowired
-    EmailService emailService;
+    ProfileService profileService;
 
     //Receive email --> validate --> send OTP --> response(success or fail)
     @PostMapping(value = "/post-email")
@@ -40,7 +40,7 @@ public class SignUpController {
     public BaseResponse<?> postEmail(@RequestBody InputEmailRequest requestLogin) {
         //TODO: need to check existing users
         //Done / not test yet
-        if (emailService.existingEmail(requestLogin.email)) {
+        if (profileService.existingEmail(requestLogin.email)) {
             OTPEnum error = OTPEnum.INVALID_EMAIL;
             return new BaseResponse<>(error.getDescCode(), error.getDesc(), null);
         }
@@ -72,7 +72,7 @@ public class SignUpController {
         FacebookResponse res = rest.restTemplate.getForObject(uri, FacebookResponse.class);
         //TODO need to check existing user
         //done / not test yet
-        if (emailService.existingEmail(res.email)) {
+        if (profileService.existingEmail(res.email)) {
             return new BaseResponse<FacebookResponse>("fail", "Already exist email", null);
         }
         return new BaseResponse<FacebookResponse>(res);

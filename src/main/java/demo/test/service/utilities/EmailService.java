@@ -1,6 +1,5 @@
 package demo.test.service.utilities;
 
-import demo.test.model.entity.ProfileEntity;
 import demo.test.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSendException;
@@ -29,11 +28,5 @@ public class EmailService {
         }
     }
 
-    public boolean existingEmail(String email) {
-        ProfileEntity user = profileRepository.getById(email);
-        if (user == null) {
-            return false;
-        }
-        return true;
-    }
+
 }
