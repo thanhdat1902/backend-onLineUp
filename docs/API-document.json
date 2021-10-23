@@ -1,128 +1,164 @@
 {
-  "info": {
-    "_postman_id": "168cc427-b25b-4041-a8e4-69cc85fa1403",
-    "name": "onLineUp API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "sign-in flow",
-      "item": [
-        {
-          "name": "[sign-up/post-email]: post Email to receive OTP",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{URL-Local}}sign-up/post-email",
-              "host": [
-                "{{URL-Local}}sign-up"
-              ],
-              "path": [
-                "post-email"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "[sign-up/verify-otp]: send OTP,  Email to server to confirm",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\",\r\n    \"otp\": \"293395\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{URL-Local}}sign-up/verify-otp",
-              "host": [
-                "{{URL-Local}}sign-up"
-              ],
-              "path": [
-                "verify-otp"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "[sign-up/create-account]: post account information",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\",\r\n    \"username\": \"nctai19125120\",\r\n    \"password\": \"123456\",\r\n    \"confirmPassword\": \"123456\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{URL-Local}}sign-up/create-account",
-              "host": [
-                "{{URL-Local}}sign-up"
-              ],
-              "path": [
-                "create-account"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "[sign-up/test-base-response]: test BaseResponse",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\",\r\n    \"otp\": \"293395\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{URL-Local}}sign-up/test-base-response",
-              "host": [
-                "{{URL-Local}}sign-up"
-              ],
-              "path": [
-                "test-base-response"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    }
-  ],
-  "variable": [
-    {
-      "key": "URL-Local",
-      "value": "http://localhost:8080/"
-    },
-    {
-      "key": "URL-Heroku",
-      "value": "https://spring-demo-5464.herokuapp.com/"
-    }
-  ]
+	"info": {
+		"_postman_id": "168cc427-b25b-4041-a8e4-69cc85fa1403",
+		"name": "onLineUp API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "sign in flow",
+			"item": [
+				{
+					"name": "Sign Up",
+					"item": [
+						{
+							"name": "[sign-up/verify-otp]: send OTP,  Email to server to confirm",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\",\r\n    \"otp\": \"293395\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL-Local}}sign-up/verify-otp",
+									"host": [
+										"{{URL-Local}}sign-up"
+									],
+									"path": [
+										"verify-otp"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[sign-up/post-email]: post Email to receive OTP",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL-Local}}sign-up/post-email",
+									"host": [
+										"{{URL-Local}}sign-up"
+									],
+									"path": [
+										"post-email"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[sign-up/use-facebook]: sign up by Facebook",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"facebookToken\": \"GGQVlaMU5DYXg0M2tyTVJhZAXlBTTNpMDBTWktLVzM1T2VyZA3VnNk5ObkhXbzJOYWF2OHJQRk05dG1NSnpUTW9fVV94N2RGR0s5clBMRzVZAclVKR3UxbHpXb1VPMlByWTVKTHdqbHJjWkpnWUpJVWtiZAElNUVdHdXl5NTN0NUdPX0hGWjVnTU50eS1UckR3ck1SY3J3b3V0TTdLRmZAUbFEZD\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL-Local}}sign-up/use-facebook",
+									"host": [
+										"{{URL-Local}}sign-up"
+									],
+									"path": [
+										"use-facebook"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[sign-up/create-account]: post account information",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"token\": \"\",\r\n    \"email\": \"xmonkeydlufx@gmail.com\",\r\n    \"username\": \"nctai19125120\",\r\n    \"password\": \"123456\",\r\n    \"confirmPassword\": \"123456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL-Local}}sign-up/create-account",
+									"host": [
+										"{{URL-Local}}sign-up"
+									],
+									"path": [
+										"create-account"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sign In",
+					"item": []
+				},
+				{
+					"name": "Testing",
+					"item": [
+						{
+							"name": "[sign-up/test-base-response]: test BaseResponse",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\",\r\n    \"otp\": \"293395\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL-Local}}sign-up/test-base-response",
+									"host": [
+										"{{URL-Local}}sign-up"
+									],
+									"path": [
+										"test-base-response"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "URL-Local",
+			"value": "http://localhost:8080/"
+		}
+	]
 }

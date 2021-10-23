@@ -1,5 +1,6 @@
 package demo.test.service;
 
+import demo.test.constant.OTPEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +14,11 @@ public class SignupService {
     private ProfileService profileService;
 
     //ham handle input email
-    public boolean handleInputEmail(String email) {
-        if (validateEmail(email)) {
-            otpService.createForMail(email);
-            return true;
-        }
-        return false;
+    public OTPEnum handleInputEmailForOTP(String email) {
+        // no need to validate email string here
+        
+        //TODO: create Authenticate manager here
+        return otpService.createForMail(email);
     }
 
     private boolean validateEmail(String email) {
