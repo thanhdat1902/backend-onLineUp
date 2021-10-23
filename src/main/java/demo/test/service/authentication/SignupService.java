@@ -2,7 +2,9 @@ package demo.test.service.authentication;
 
 import demo.test.constant.AuthenticationEnum;
 import demo.test.model.response.BaseResponse;
+import demo.test.model.response.FacebookResponse;
 import demo.test.service.database.ProfileService;
+import demo.test.service.utilities.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +17,35 @@ public class SignupService {
     @Autowired
     private ProfileService profileService;
 
+    @Autowired
+    private RestService restService;
+
     //ham handle input email
-    public AuthenticationEnum handleInputEmailForOTP(String email) {
+    public BaseResponse handleInputEmailForOTP(String email) {
+        AuthenticationEnum status;
+
         if (profileService.existingEmail(email)) {
-            return AuthenticationEnum.EXISTING_EMAIL;
+            status = AuthenticationEnum.EXISTING_EMAIL;
+        } else {
+            status = otpService.createForMail(email);
         }
-        return otpService.createForMail(email);
+
+        return BaseResponse.Builder()
+                .addStatus(status == AuthenticationEnum.SEND_OTP_SUCCESS)
+                .addCode(status.getDescCode())
+                .addDesc(status.getDesc())
+                .addDesc(null);
+    }
+
+    public BaseResponse handleVerifyOTP(String email, String OTP) {
+        AuthenticationEnum status = otpService.verifyOtpForEmail(email, OTP);
+
+        //TODO return token here
+        return BaseResponse.Builder()
+                .addStatus(status == AuthenticationEnum.SUCCESS)
+                .addCode(status.getDescCode())
+                .addDesc(status.getDesc())
+                .build();
     }
 
     public boolean handleCreateAccount(String username, String email, String password, String confirmPassword) {
@@ -32,19 +57,23 @@ public class SignupService {
         return true;
     }
 
-    public BaseResponse handleEmailFacebook(String email) {
+    public BaseResponse handleFacebookToken(String token) {
+        FacebookResponse res = null;
         AuthenticationEnum status = AuthenticationEnum.FACEBOOK_SUCCESS;
-        if (email == null || email.equals("")) {
+        res = restService.requestProfileFromFbToken(token);
+        if (res == null || res.email == null || res.email.equals("")) {
             status = AuthenticationEnum.FACEBOOK_FAIL;
         }
-        if (profileService.existingEmail(email)) {
+        if (profileService.existingEmail(res.email)) {
             status = AuthenticationEnum.EXISTING_EMAIL;
         }
-        return BaseResponse.Builder()
+
+        //TODO: ADD token here
+        return BaseResponse.<FacebookResponse>Builder()
+                .addData(res)
                 .addStatus(status == AuthenticationEnum.FACEBOOK_SUCCESS)
-                .addCode(status.getDescCode())
                 .addDesc(status.getDesc())
-//                .addData(res)
-                .build();
+                .addCode(status.getDescCode());
     }
+
 }

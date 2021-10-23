@@ -3,6 +3,7 @@ package demo.test.service.utilities;
 import demo.test.model.response.FacebookResponse;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -29,7 +30,10 @@ public class RestService {
                 .queryParam("access_token", token)
                 .build()
                 .toUri();
-
-        return restTemplate.getForObject(uri, FacebookResponse.class);
+        try {
+            return this.restTemplate.getForObject(uri, FacebookResponse.class);
+        } catch (RestClientException e) {
+            return new FacebookResponse();
+        }
     }
 }
