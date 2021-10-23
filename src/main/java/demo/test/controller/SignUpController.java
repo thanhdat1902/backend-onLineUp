@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RequestMapping("/sign-up")
 public class SignUpController {
-
+    
     @Autowired
     SignupService signupService;
 
@@ -65,9 +65,9 @@ public class SignUpController {
     public BaseResponse getUserInformation(@RequestBody InputFacebookRequest facebookRequest) {
 
         FacebookResponse res = restService.requestProfileFromFbToken(facebookRequest.facebookToken);
-        //TODO need to check existing user
-        return new BaseResponse<FacebookResponse>()
-                .addData(res);
+
+        //TODO: not add data yet.
+        return signupService.handleEmailFacebook(res.email);
     }
 
     //input username, password and confirm password
