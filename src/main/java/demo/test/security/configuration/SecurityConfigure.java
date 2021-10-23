@@ -63,7 +63,7 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter {
         http.csrf().ignoringAntMatchers("/**");
         http.httpBasic().authenticationEntryPoint(restServicesEntryPoint());
         http.authorizeRequests()
-                .antMatchers("/", "/login")
+                .antMatchers("/sign-up-otp", "/login")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

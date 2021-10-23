@@ -27,7 +27,11 @@ public class JwtService {
     private static final String secret = "nguyenthanhdat19022001@gmail.com";
     private static final long EXPIRE_TIME = 60 * 60 * 1000;
     private static final Logger logger = LoggerFactory.getLogger(JwtService.class.getName());
-
+    
+    public String generateTokenFromEmail(String email) {
+        Map<String, Object> claims = new HashMap<>();
+        return doGenerateToken(claims, email);
+    }
 
     // Generate token
     public String generateToken(Authentication authentication) {

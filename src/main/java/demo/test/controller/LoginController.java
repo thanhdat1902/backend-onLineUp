@@ -33,6 +33,9 @@ public class LoginController {
                 new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+
+        //SecurityContextHolder.getContext().getAuthentication().
+
         String jwt = jwtService.generateToken(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         ProfileEntity currentUser = userService.findByUsername(user.getEmail()).get();
