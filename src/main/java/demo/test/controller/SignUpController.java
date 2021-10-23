@@ -73,7 +73,7 @@ public class SignUpController {
         //TODO need to check existing user
         //done / not test yet
         if (profileService.existingEmail(res.email)) {
-            return new BaseResponse<FacebookResponse>("fail", "Already exist email", null);
+            return new BaseResponse<FacebookResponse>("Fail", "Already exist email", null);
         }
         return new BaseResponse<FacebookResponse>(res);
     }

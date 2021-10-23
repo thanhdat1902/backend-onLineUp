@@ -5,12 +5,13 @@ import demo.test.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProfileService {
 
     @Autowired
     ProfileRepository profileRepository;
-    //service bay h gọi database để tạo ra 1 cái account.
 
     public void createAccount(String username, String password, String email) {
         ProfileEntity user = new ProfileEntity(username, password, email);
@@ -18,8 +19,8 @@ public class ProfileService {
     }
 
     public boolean existingEmail(String email) {
-        ProfileEntity user = profileRepository.getById(email);
-        if (user == null) {
+        List<ProfileEntity> user = profileRepository.findByEmail(email);
+        if (user.isEmpty()) {
             return false;
         }
         return true;
