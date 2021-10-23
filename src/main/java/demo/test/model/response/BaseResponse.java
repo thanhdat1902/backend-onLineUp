@@ -9,8 +9,8 @@ public class BaseResponse<T> {
     public long created_time;
     public T data;
 
-    public static BaseResponse Builder() {
-        return new BaseResponse();
+    public static <TT> BaseResponse Builder() {
+        return new BaseResponse<TT>();
     }
 
     public BaseResponse addStatus(boolean status) {
