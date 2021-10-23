@@ -1,5 +1,6 @@
-package demo.test.service;
+package demo.test.service.utilities;
 
+import demo.test.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.SimpleMailMessage;
@@ -11,6 +12,8 @@ public class EmailService {
 
     @Autowired
     private JavaMailSender javaMailSender;
+    @Autowired
+    private ProfileRepository profileRepository;
 
     public boolean sendSimpleEmail(String target, String subject, String content) {
         SimpleMailMessage msg = new SimpleMailMessage();
@@ -24,5 +27,6 @@ public class EmailService {
             return false;
         }
     }
+
 
 }

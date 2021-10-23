@@ -1,8 +1,9 @@
-package demo.test.service;
+package demo.test.service.authentication;
 
-import demo.test.constant.OTPEnum;
+import demo.test.constant.AuthenticationEnum;
 import demo.test.model.entity.OTPEntity;
 import demo.test.repository.OTPRepository;
+import demo.test.service.utilities.EmailService;
 import demo.test.util.NumberUtils;
 import demo.test.util.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,26 +20,26 @@ public class OTPService {
     @Autowired
     private EmailService emailService;
 
-    public OTPEnum createForMail(String mail) {
+    public AuthenticationEnum createForMail(String mail) {
         String randomOTP = NumberUtils.generateRandomString(6);
         OTPEntity otpEntity = new OTPEntity(mail, randomOTP, TimeUtils.getCurrentTimestamp());
 
         //send OTP to mail
         boolean didSendOTP = emailService.sendSimpleEmail(mail, "Test OTP", "Your OTP is " + randomOTP);
         if (!didSendOTP) {
-            return OTPEnum.INVALID_EMAIL;
+            return AuthenticationEnum.INVALID_EMAIL;
         }
 
         //Save to db
         otpRepository.save(otpEntity);
-        return OTPEnum.SEND_OTP_SUCCESS;
+        return AuthenticationEnum.SEND_OTP_SUCCESS;
     }
 
 
-    public OTPEnum verifyOtpForEmail(String email, String otp) {
+    public AuthenticationEnum verifyOtpForEmail(String email, String otp) {
         try {
             OTPEntity userOTP = otpRepository.getById(email);
-            OTPEnum status = checkValidOtp(otp, userOTP);
+            AuthenticationEnum status = checkValidOtp(otp, userOTP);
 
             switch (status) {
                 case SUCCESS:
@@ -54,7 +55,7 @@ public class OTPService {
 
             return status;
         } catch (EntityNotFoundException ignored) {
-            return OTPEnum.NOT_FOUND;
+            return AuthenticationEnum.NOT_FOUND;
         }
     }
 
@@ -67,22 +68,22 @@ public class OTPService {
         otpRepository.save(otpEntity);
     }
 
-    private OTPEnum checkValidOtp(String otp, OTPEntity otpEntity) {
+    private AuthenticationEnum checkValidOtp(String otp, OTPEntity otpEntity) {
 
         if (otpEntity.getTimeRetry() < 0) {
-            return OTPEnum.END_OF_TRY;
+            return AuthenticationEnum.END_OF_TRY;
         }
 
         if (!otpEntity.getOTP().equals(otp)) {
-            return OTPEnum.WRONG;
+            return AuthenticationEnum.WRONG;
         }
 
         long currentTime = TimeUtils.getCurrentTimestamp();
         if (currentTime - otpEntity.getCreateTime() > 60 * 1000 * 60) {     //1 hour
-            return OTPEnum.TIME_OUT;
+            return AuthenticationEnum.TIME_OUT;
         }
 
-        return OTPEnum.SUCCESS;
+        return AuthenticationEnum.SUCCESS;
     }
 
     public int responseVerifyOtpEmail(String email, String otp) {

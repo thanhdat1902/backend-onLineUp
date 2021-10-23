@@ -1,19 +1,28 @@
-package demo.test.service;
+package demo.test.service.database;
 
 import demo.test.model.entity.ProfileEntity;
 import demo.test.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProfileService {
 
     @Autowired
     ProfileRepository profileRepository;
-    //service bay h gọi database để tạo ra 1 cái account.
 
     public void createAccount(String username, String password, String email) {
         ProfileEntity user = new ProfileEntity(username, password, email);
         profileRepository.save(user);
+    }
+
+    public boolean existingEmail(String email) {
+        List<ProfileEntity> user = profileRepository.findByEmail(email);
+        if (user.isEmpty()) {
+            return false;
+        }
+        return true;
     }
 }
