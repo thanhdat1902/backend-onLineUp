@@ -1,50 +1,73 @@
 package demo.test.controller;
 
-import demo.test.constant.OTPEnum;
+import demo.test.constant.AuthenticationEnum;
 import demo.test.model.request.InputEmailOtpRequest;
 import demo.test.model.request.InputEmailRequest;
 import demo.test.model.request.InputFacebookRequest;
 import demo.test.model.response.BaseResponse;
-import demo.test.service.OTPService;
-import demo.test.service.SignupService;
+import demo.test.model.response.FacebookResponse;
+import demo.test.service.authentication.OTPService;
+import demo.test.service.authentication.SignupService;
+import demo.test.service.database.ProfileService;
+import demo.test.service.utilities.RestService;
 import demo.test.util.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@CrossOrigin
 @RequestMapping("/sign-up")
 public class SignUpController {
 
     @Autowired
     SignupService signupService;
+
     @Autowired
     OTPService otpService;
 
+    @Autowired
+    RestService restService;
+
+    @Autowired
+    ProfileService profileService;
+
     //Receive email --> validate --> send OTP --> response(success or fail)
     @PostMapping(value = "/post-email")
-    public @ResponseBody
-    OTPEnum postEmail(@RequestBody InputEmailRequest requestLogin) {
-//        if (signupService.handleInputEmail(requestLogin.getEmail())) {
-//            return "Success";
-//        }
-//        return "Wrong format email";
-        return otpService.createForMail(requestLogin.getEmail());
+    @ResponseBody
+    public BaseResponse<?> postEmail(@RequestBody InputEmailRequest requestLogin) {
+        AuthenticationEnum status = signupService.handleInputEmailForOTP(requestLogin.email);
 
+        return BaseResponse.Builder()
+                .addStatus(status == AuthenticationEnum.SEND_OTP_SUCCESS)
+                .addCode(status.getDescCode())
+                .addDesc(status.getDesc())
+                .addDesc(null);
     }
 
     //verify otp
     @PostMapping(path = "/verify-otp")
-    public @ResponseBody
-    BaseResponse<?> verifyOTP(@RequestBody InputEmailOtpRequest req) {
-        OTPEnum status = otpService.verifyOtpForEmail(req.email, req.otp);
-        BaseResponse<?> res = new BaseResponse<>();
-        res.code = status.getDescCode();
-        res.desc = status.getDesc();
-        return res;
+    @ResponseBody
+    public BaseResponse<?> verifyOTP(@RequestBody InputEmailOtpRequest req) {
+        AuthenticationEnum status = otpService.verifyOtpForEmail(req.email, req.otp);
+
+        //TODO return token here
+        return BaseResponse.Builder()
+                .addStatus(status == AuthenticationEnum.SUCCESS)
+                .addCode(status.getDescCode())
+                .addDesc(status.getDesc())
+                .build();
+    }
+
+    //use facebook to sign up
+    @PostMapping(path = "/use-facebook")
+    @ResponseBody
+    public BaseResponse getUserInformation(@RequestBody InputFacebookRequest facebookRequest) {
+
+        FacebookResponse res = restService.requestProfileFromFbToken(facebookRequest.facebookToken);
+
+        //TODO: not add data yet.
+        return signupService.handleEmailFacebook(res.email);
     }
 
     //input username, password and confirm password

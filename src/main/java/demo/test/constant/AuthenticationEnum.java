@@ -1,15 +1,18 @@
 package demo.test.constant;
 
-public enum OTPEnum {
+public enum AuthenticationEnum {
     WRONG("OTP is not correct", "wrong"),
     SUCCESS("Correct OTP!", "success"),
     TIME_OUT("Your OTP is expired", "fail"),
     NOT_FOUND("Not found!", "otp_not_found"),
     END_OF_TRY("You have no attempt left", "fail"),
     INVALID_EMAIL("Something wrong with your email", "fail"),
-    SEND_OTP_SUCCESS("Sent OTP!", "sent_otp");
+    SEND_OTP_SUCCESS("Sent OTP!", "sent_otp"),
+    EXISTING_EMAIL("This email is already in use", "existing_email"),
+    FACEBOOK_FAIL("Something go wrong with your accoutn", "facebook_fail"),
+    FACEBOOK_SUCCESS("Accept facebook account", "facebook_success");
 
-    OTPEnum(String desc, String descCode) {
+    AuthenticationEnum(String desc, String descCode) {
         this.desc = desc;
         this.descCode = descCode;
     }
