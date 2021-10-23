@@ -1,57 +1,89 @@
 package demo.test.model.entity;
 
+//import demo.test.model.db.Role;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Profile")
 public class ProfileEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    private String username;
-    private String password;
+    @Column(unique = true, nullable = false)
     private String email;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(nullable = false)
+    private String password;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(nullable = false)
+    private String fullName;
 
     public ProfileEntity() {
-
     }
 
-    public ProfileEntity(String username, String password, String email) {
-        this.username = username;
-        this.password = password;
+    public ProfileEntity(String email, String password) {
         this.email = email;
+        this.password = password;
+        this.roles = "USER";
     }
+
+    private String username;
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(String name) {
         this.username = username;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+    private String roles;
+
+    public String getRoles() {
+        return this.roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(name = "users_roles",
+//            joinColumns = {@JoinColumn(name = "user_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+
+    public String getEmail() {
+        return this.email;
+    }
+
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getFullName() {
+        return this.fullName;
     }
+
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setFullname(String fullName) {
+        this.fullName = fullName;
     }
 }

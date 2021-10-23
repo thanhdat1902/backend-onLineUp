@@ -1,6 +1,6 @@
 package demo.test.controller;
 
-import demo.test.model.entity.User;
+import demo.test.model.entity.ProfileEntity;
 import demo.test.model.response.JwtResponse;
 import demo.test.service.JwtService;
 import demo.test.service.helper.IUserService;
@@ -28,14 +28,14 @@ public class LoginController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User user) {
+    public ResponseEntity<?> login(@RequestBody ProfileEntity user) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = jwtService.generateToken(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User currentUser = userService.findByUsername(user.getEmail()).get();
-        return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), currentUser.getFullName(), userDetails.getAuthorities()));
+        ProfileEntity currentUser = userService.findByUsername(user.getEmail()).get();
+        return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), currentUser.getFullName(), jwtService.getExpirationDateFromToken(jwt)));
     }
 }

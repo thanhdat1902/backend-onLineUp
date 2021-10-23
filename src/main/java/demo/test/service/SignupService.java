@@ -26,12 +26,12 @@ public class SignupService {
         return email.matches(regex);
     }
 
-    public boolean handleCreateAccount(String username, String email, String password, String confirmPassword) {
-        //? username có unique không? Chưa biết
-        if (!password.equals(confirmPassword)) return false;
-        else {
-            profileService.createAccount(username, password, email);
-        }
-        return true;
-    }
+//    public boolean handleCreateAccount(String email, String password, String confirmPassword) {
+//        //? username có unique không? Chưa biết
+//        if (!password.equals(confirmPassword)) return false;
+//        else {
+//            profileService.save(password, email);
+//        }
+//        return true;
+//    }
 }
