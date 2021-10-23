@@ -6,15 +6,19 @@ import demo.test.model.request.InputEmailRequest;
 import demo.test.model.request.InputFacebookRequest;
 import demo.test.model.request.InputInformationRequest;
 import demo.test.model.response.BaseResponse;
+import demo.test.model.response.FacebookResponse;
 import demo.test.service.OTPService;
+import demo.test.service.RestService;
 import demo.test.service.SignupService;
-import demo.test.util.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 @Controller
 @RequestMapping("/sign-up")
@@ -24,27 +28,53 @@ public class SignUpController {
     SignupService signupService;
     @Autowired
     OTPService otpService;
+    @Autowired
+    RestService rest;
 
     //Receive email --> validate --> send OTP --> response(success or fail)
     @PostMapping(value = "/post-email")
-    public @ResponseBody
-    OTPEnum postEmail(@RequestBody InputEmailRequest requestLogin) {
-//        if (signupService.handleInputEmail(requestLogin.getEmail())) {
-//            return "Success";
-//        }
-//        return "Wrong format email";
-        return otpService.createForMail(requestLogin.getEmail());
+    @ResponseBody
+    public BaseResponse<?> postEmail(@RequestBody InputEmailRequest requestLogin) {
+        //TODO: need to check existing users
+        OTPEnum status = signupService.handleInputEmailForOTP(requestLogin.email);
+
+        return BaseResponse.Builder()
+                .addStatus(status == OTPEnum.SEND_OTP_SUCCESS)
+                .addCode(status.getDescCode())
+                .addDesc(status.getDesc())
+                .addDesc(null);
+
     }
 
     //verify otp
     @PostMapping(path = "/verify-otp")
-    public @ResponseBody
-    BaseResponse<?> verifyOTP(@RequestBody InputEmailOtpRequest req) {
+    @ResponseBody
+    public BaseResponse<?> verifyOTP(@RequestBody InputEmailOtpRequest req) {
         OTPEnum status = otpService.verifyOtpForEmail(req.email, req.otp);
-        BaseResponse<?> res = new BaseResponse<>();
-        res.code = status.getDescCode();
-        res.desc = status.getDesc();
-        return res;
+
+        //TODO return token here
+        return BaseResponse.Builder()
+                .addStatus(status == OTPEnum.SUCCESS)
+                .addCode(status.getDescCode())
+                .addDesc(status.getDesc())
+                .build();
+    }
+
+    //use facebook to sign up
+    @PostMapping(path = "/use-facebook")
+    @ResponseBody
+    public BaseResponse getUserInformation(@RequestBody InputFacebookRequest facebookRequest) {
+        URI uri = UriComponentsBuilder
+                .fromUriString("https://graph.facebook.com/me")
+                .queryParam("fields", "email")
+                .queryParam("access_token", facebookRequest.facebookToken)
+                .build()
+                .toUri();
+
+        FacebookResponse res = rest.restTemplate.getForObject(uri, FacebookResponse.class);
+        //TODO need to check existing user
+        return new BaseResponse<FacebookResponse>()
+                .addData(res);
     }
 
     //input username, password and confirm password
@@ -57,23 +87,4 @@ public class SignUpController {
         }
         return "Fail";
     }
-
-    @PostMapping(value = "/test-base-response")
-    public @ResponseBody
-    BaseResponse<InputEmailOtpRequest> testTingGson(@RequestBody InputEmailOtpRequest request) {
-        BaseResponse<InputEmailOtpRequest> a = new BaseResponse<InputEmailOtpRequest>(request, TimeUtils.getCurrentTimestamp());
-        return a;
-    }
-
-    @PostMapping(value = "/use-facebook")
-    public @ResponseBody
-    InputFacebookRequest postFacebook(@RequestBody InputFacebookRequest requestFacebook) {
-        return requestFacebook;
-    }
-
-
-    //Email, email+otp, token-fb, user-password + password-confirm
-    //Reponse cho từng thằng
-    //Tạo OTPController --> postOTP + response khác nhau: status: fail + success, description: ..., msg: tuy vao respon ma truyen vao khac nhau.
-    //Sign-in: email + password
 }
