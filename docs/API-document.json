@@ -12,32 +12,6 @@
 					"name": "Sign Up",
 					"item": [
 						{
-							"name": "[sign-up/verify-otp]: send OTP,  Email to server to confirm",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\",\r\n    \"otp\": \"293395\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{URL-Local}}sign-up/verify-otp",
-									"host": [
-										"{{URL-Local}}sign-up"
-									],
-									"path": [
-										"verify-otp"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "[sign-up/post-email]: post Email to receive OTP",
 							"request": {
 								"method": "POST",
@@ -58,6 +32,32 @@
 									],
 									"path": [
 										"post-email"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[sign-up/verify-otp]: send OTP,  Email to server to confirm",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\",\r\n    \"otp\": \"293395\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL-Local}}sign-up/verify-otp",
+									"host": [
+										"{{URL-Local}}sign-up"
+									],
+									"path": [
+										"verify-otp"
 									]
 								}
 							},
