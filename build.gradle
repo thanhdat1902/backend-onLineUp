@@ -23,6 +23,9 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-mail"
     implementation 'com.sun.mail:javax.mail:1.6.2'
 
+    //convert json to object
+    implementation 'com.google.code.gson:gson:2.8.8'
+
     runtimeOnly "mysql:mysql-connector-java"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 

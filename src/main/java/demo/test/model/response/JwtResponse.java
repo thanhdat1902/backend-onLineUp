@@ -1,38 +1,45 @@
 package demo.test.model.response;
 
-import org.springframework.security.core.GrantedAuthority;
-
-import java.util.Collection;
+import java.util.Date;
 
 public class JwtResponse {
-    private Long id;
+    private int id;
     private String token;
     private String type = "Bearer";
-    private String username;
+    private String email;
     private String name;
-    private Collection<? extends GrantedAuthority> roles;
+    private Date exp;
+//    private Collection<? extends GrantedAuthority> roles;
 
-    public JwtResponse(String accessToken, Long id, String username, String name, Collection<? extends GrantedAuthority> roles) {
+    public JwtResponse(String accessToken, int id, String email, String name, Date exp) {
         this.token = accessToken;
-        this.username = username;
-        this.roles = roles;
+        this.email = email;
         this.name = name;
         this.id = id;
+        this.exp = exp;
     }
 
     public String getName() {
         return name;
     }
 
+    public Date getExp() {
+        return exp;
+    }
+
+    public void setExp(Date exp) {
+        this.exp = exp;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -52,15 +59,12 @@ public class JwtResponse {
         this.type = tokenType;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String username) {
+        this.email = username;
     }
 
-    public Collection<? extends GrantedAuthority> getRoles() {
-        return roles;
-    }
 }

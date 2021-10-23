@@ -1,19 +1,56 @@
 package demo.test.service;
 
 import demo.test.model.entity.ProfileEntity;
+import demo.test.model.helper.UserPrincipal;
 import demo.test.repository.ProfileRepository;
+import demo.test.service.helper.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
-public class ProfileService {
-
+public class ProfileService implements IUserService {
     @Autowired
-    ProfileRepository profileRepository;
-    //service bay h gọi database để tạo ra 1 cái account.
+    private ProfileRepository profileRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    public void createAccount(String username, String password, String email) {
-        ProfileEntity user = new ProfileEntity(username, password, email);
-        profileRepository.save(user);
+    @Override
+    public Iterable<ProfileEntity> findAll() {
+        return profileRepository.findAll();
+    }
+
+    @Override
+    public Optional<ProfileEntity> findById(int id) {
+        return profileRepository.findById(id);
+    }
+
+    @Override
+    public ProfileEntity save(ProfileEntity user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return profileRepository.save(user);
+    }
+
+    @Override
+    public void remove(int id) {
+        profileRepository.deleteById(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<ProfileEntity> userOptional = profileRepository.findByEmail(username);
+        if (!userOptional.isPresent()) {
+            throw new UsernameNotFoundException(username);
+        }
+        return UserPrincipal.build(userOptional.get());
+    }
+
+    @Override
+    public Optional<ProfileEntity> findByUsername(String username) {
+        return profileRepository.findByEmail(username);
     }
 }

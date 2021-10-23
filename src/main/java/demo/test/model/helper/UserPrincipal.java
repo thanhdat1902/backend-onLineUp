@@ -1,55 +1,47 @@
 package demo.test.model.helper;
 
-import demo.test.model.entity.User;
+import demo.test.model.entity.ProfileEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Set;
 
-public class UserPrinciple implements UserDetails {
+public class UserPrincipal implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private int id;
 
     private String email;
 
     private String password;
 
-    private Collection<? extends GrantedAuthority> roles;
+    private Set<GrantedAuthority> authorities = new HashSet<>();
+    
 
-    public UserPrinciple(Long id,
-                         String email, String password,
-                         Collection<? extends GrantedAuthority> roles) {
+    public UserPrincipal(int id, String email, String password) {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.roles = roles;
+        this.authorities.add(new SimpleGrantedAuthority("USER"));
     }
 
-    public UserPrinciple(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
-
-    public static UserPrinciple build(User user) {
-        List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
-                new SimpleGrantedAuthority(role.getName())
-        ).collect(Collectors.toList());
-
-        return new UserPrinciple(
+    public static UserPrincipal build(ProfileEntity user) {
+//        List<GrantedAuthority> listAuthorities = Stream.of(
+//                new SimpleGrantedAuthority(user.getRoles())
+//        ).collect(Collectors.toList());
+        return new UserPrincipal(
                 user.getId(),
                 user.getEmail(),
-                user.getPassword(),
-                authorities
+                user.getPassword()
         );
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
@@ -65,7 +57,7 @@ public class UserPrinciple implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        return this.authorities;
     }
 
 
@@ -94,7 +86,7 @@ public class UserPrinciple implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserPrinciple user = (UserPrinciple) o;
+        UserPrincipal user = (UserPrincipal) o;
         return Objects.equals(id, user.id);
     }
 
