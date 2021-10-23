@@ -1,4 +1,4 @@
-package demo.test.service;
+package demo.test.service.utilities;
 
 import demo.test.repository.JavaRepository;
 import org.springframework.beans.factory.annotation.Autowired;

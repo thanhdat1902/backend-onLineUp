@@ -1,6 +1,7 @@
-package demo.test.service;
+package demo.test.service.authentication;
 
-import demo.test.constant.OTPEnum;
+import demo.test.constant.AuthenticationEnum;
+import demo.test.service.database.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +15,11 @@ public class SignupService {
     private ProfileService profileService;
 
     //ham handle input email
-    public OTPEnum handleInputEmailForOTP(String email) {
-        // no need to validate email string here
-        
-        //TODO: create Authenticate manager here
+    public AuthenticationEnum handleInputEmailForOTP(String email) {
+        if (profileService.existingEmail(email)) {
+            return AuthenticationEnum.EXISTING_EMAIL;
+        }
         return otpService.createForMail(email);
-    }
-
-    private boolean validateEmail(String email) {
-        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
-        return email.matches(regex);
     }
 
     public boolean handleCreateAccount(String username, String email, String password, String confirmPassword) {
