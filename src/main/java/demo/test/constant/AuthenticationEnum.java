@@ -9,8 +9,11 @@ public enum AuthenticationEnum {
     INVALID_EMAIL("Something wrong with your email", "fail"),
     SEND_OTP_SUCCESS("Sent OTP!", "sent_otp"),
     EXISTING_EMAIL("This email is already in use", "existing_email"),
-    FACEBOOK_FAIL("Something go wrong with your accoutn", "facebook_fail"),
-    FACEBOOK_SUCCESS("Accept facebook account", "facebook_success");
+    FACEBOOK_FAIL("Something go wrong with your account", "facebook_fail"),
+    FACEBOOK_SUCCESS("Accept facebook account", "facebook_success"),
+    USERNAME_ERROR("Something wrong with your user name", "error_username"),
+    CONFIRM_PASSWORD_FAIL("Confirm password fail!", "wrong_confirm_password"),
+    CREATE_ACCOUNT_SUCCESS("Create account success!", "create_account_success");
 
     AuthenticationEnum(String desc, String descCode) {
         this.desc = desc;
