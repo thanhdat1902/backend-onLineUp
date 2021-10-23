@@ -20,6 +20,7 @@ public class SignupService {
     @Autowired
     private RestService restService;
 
+
     //ham handle input email
     public BaseResponse handleInputEmailForOTP(String email) {
         AuthenticationEnum status;
@@ -48,13 +49,21 @@ public class SignupService {
                 .build();
     }
 
-    public boolean handleCreateAccount(String username, String email, String password, String confirmPassword) {
-        //TODO: check username exists or not.
-        if (!password.equals(confirmPassword)) return false;
-        else {
+    public BaseResponse handleCreateAccount(String username, String email, String password, String confirmPassword) {
+        AuthenticationEnum status;
+        if (username == null || profileService.existingUsername(username)) {
+            status = AuthenticationEnum.USERNAME_ERROR;
+        } else if (!password.equals(confirmPassword)) {
+            status = AuthenticationEnum.CONFIRM_PASSWORD_FAIL;
+        } else {
             profileService.createAccount(username, password, email);
+            status = AuthenticationEnum.CREATE_ACCOUNT_SUCCESS;
         }
-        return true;
+        return BaseResponse.Builder()
+                .addStatus(status == AuthenticationEnum.CREATE_ACCOUNT_SUCCESS)
+                .addCode(status.getDescCode())
+                .addDesc(status.getDesc())
+                .build();
     }
 
     public BaseResponse handleFacebookToken(String token) {

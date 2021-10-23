@@ -25,4 +25,12 @@ public class ProfileService {
         }
         return true;
     }
+
+    public boolean existingUsername(String username) {
+        List<ProfileEntity> user = profileRepository.findByUsername(username);
+        if (user.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
 }

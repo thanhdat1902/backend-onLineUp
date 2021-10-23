@@ -12,4 +12,10 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, String> 
             nativeQuery = true
     )
     List<ProfileEntity> findByEmail(String email);
+
+    @Query(
+            value = "SELECT * FROM Profile p WHERE p.username = ?1",
+            nativeQuery = true
+    )
+    List<ProfileEntity> findByUsername(String username);
 }
