@@ -63,11 +63,22 @@ public class SignUpController {
     @PostMapping(path = "/use-facebook")
     @ResponseBody
     public BaseResponse getUserInformation(@RequestBody InputFacebookRequest facebookRequest) {
-
+        AuthenticationEnum status = AuthenticationEnum.FACEBOOK_SUCCESS;
         FacebookResponse res = restService.requestProfileFromFbToken(facebookRequest.facebookToken);
+
         //TODO need to check existing user
-        return new BaseResponse<FacebookResponse>()
-                .addData(res);
+        if (res.email == null || res.email.equals("")) {
+            status = AuthenticationEnum.FACEBOOK_FAIL;
+        }
+        if (profileService.existingEmail(res.email)) {
+            status = AuthenticationEnum.EXISTING_EMAIL;
+        }
+        return BaseResponse.Builder()
+                .addStatus(status == AuthenticationEnum.FACEBOOK_SUCCESS)
+                .addCode(status.getDescCode())
+                .addDesc(status.getDesc())
+//                .addData(res)
+                .build();
     }
 
     //input username, password and confirm password
