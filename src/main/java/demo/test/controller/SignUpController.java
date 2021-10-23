@@ -33,6 +33,7 @@ public class SignUpController {
 //        }
 //        return "Wrong format email";
         return otpService.createForMail(requestLogin.getEmail());
+
     }
 
     //verify otp
@@ -70,7 +71,7 @@ public class SignUpController {
         return requestFacebook;
     }
 
-    
+
     //Email, email+otp, token-fb, user-password + password-confirm
     //Reponse cho từng thằng
     //Tạo OTPController --> postOTP + response khác nhau: status: fail + success, description: ..., msg: tuy vao respon ma truyen vao khac nhau.
