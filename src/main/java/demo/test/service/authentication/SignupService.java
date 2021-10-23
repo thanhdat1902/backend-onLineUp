@@ -23,7 +23,7 @@ public class SignupService {
     }
 
     public boolean handleCreateAccount(String username, String email, String password, String confirmPassword) {
-        //? username có unique không? Chưa biết
+        //TODO: check username exists or not.
         if (!password.equals(confirmPassword)) return false;
         else {
             profileService.createAccount(username, password, email);

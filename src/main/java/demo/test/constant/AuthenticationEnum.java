@@ -8,7 +8,9 @@ public enum AuthenticationEnum {
     END_OF_TRY("You have no attempt left", "fail"),
     INVALID_EMAIL("Something wrong with your email", "fail"),
     SEND_OTP_SUCCESS("Sent OTP!", "sent_otp"),
-    EXISTING_EMAIL("This email is already in use", "existing_email");
+    EXISTING_EMAIL("This email is already in use", "existing_email"),
+    FACEBOOK_FAIL("Something go wrong with your accoutn", "facebook_fail"),
+    FACEBOOK_SUCCESS("Accept facebook account", "facebook_success");
 
     AuthenticationEnum(String desc, String descCode) {
         this.desc = desc;
