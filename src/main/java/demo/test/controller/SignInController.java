@@ -18,16 +18,6 @@ public class SignInController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody ProfileEntity user) {
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//        String jwt = jwtService.generateToken(authentication);
-//
-//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//        ProfileEntity currentUser = userService.findByUsername(user.getEmail()).get();
-//
-//        return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), currentUser.getFullName(), jwtService.getExpirationDateFromToken(jwt)));
         return signinService.handleSignIn(user);
     }
 }
