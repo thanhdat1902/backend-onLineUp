@@ -18,6 +18,6 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
                          AuthenticationException e)
             throws IOException {
         logger.error("Unauthorized error. Message - {}", e.getMessage());
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error -> Unauthorized");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Incorrect email or password");
     }
 }
