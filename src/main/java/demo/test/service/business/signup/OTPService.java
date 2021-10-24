@@ -1,11 +1,11 @@
-package demo.test.service.authentication;
+package demo.test.service.business.signup;
 
-import demo.test.constant.AuthenticationEnum;
+import demo.test.common.constant.AuthenticationEnum;
+import demo.test.common.utils.NumberUtils;
+import demo.test.common.utils.TimeUtils;
 import demo.test.model.entity.OTPEntity;
 import demo.test.repository.OTPRepository;
-import demo.test.service.utilities.EmailService;
-import demo.test.util.NumberUtils;
-import demo.test.util.TimeUtils;
+import demo.test.service.provider.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

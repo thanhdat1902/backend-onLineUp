@@ -1,7 +1,7 @@
-package demo.test.service.utilities;
+package demo.test.service.provider;
 
 
-import demo.test.model.helper.UserPrincipal;
+import demo.test.security.principal.UserPrincipal;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -18,7 +17,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
 @Service
 public class JwtService {
     @Autowired
@@ -27,7 +25,7 @@ public class JwtService {
     private static final String secret = "nguyenthanhdat19022001@gmail.com";
     private static final long EXPIRE_TIME = 60 * 60 * 1000;
     private static final Logger logger = LoggerFactory.getLogger(JwtService.class.getName());
-    
+
     public String generateTokenFromEmail(String email) {
         Map<String, Object> claims = new HashMap<>();
         return doGenerateToken(claims, email);

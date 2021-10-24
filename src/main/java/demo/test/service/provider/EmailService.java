@@ -1,4 +1,4 @@
-package demo.test.service.utilities;
+package demo.test.service.provider;
 
 import demo.test.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +27,4 @@ public class EmailService {
             return false;
         }
     }
-
-
 }
