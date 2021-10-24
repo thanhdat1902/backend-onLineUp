@@ -1,4 +1,4 @@
-package demo.test.util;
+package demo.test.common.utils;
 
 import java.util.Date;
 

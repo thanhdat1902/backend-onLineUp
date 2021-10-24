@@ -1,4 +1,4 @@
-package demo.test.model.helper;
+package demo.test.security.principal;
 
 import demo.test.model.entity.ProfileEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,7 +21,7 @@ public class UserPrincipal implements UserDetails {
     private String password;
 
     private Set<GrantedAuthority> authorities = new HashSet<>();
-    
+
 
     public UserPrincipal(int id, String email, String password) {
         this.id = id;

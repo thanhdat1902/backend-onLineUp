@@ -1,7 +1,7 @@
 package demo.test.security.configuration;
 
 import demo.test.security.filter.JwtAuthenticationFilter;
-import demo.test.service.helper.IUserService;
+import demo.test.service.implementation.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -65,6 +65,7 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/login", "/sign-up/post-email", "/sign-up/verify-otp", "/sign-up/use-facebook",
                         "/sign-up/testt", "/demo/test-fb").permitAll()
+
                 .anyRequest().authenticated()
                 .and().csrf().disable();
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
