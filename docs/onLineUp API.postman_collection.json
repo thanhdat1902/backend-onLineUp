@@ -1,0 +1,102 @@
+{
+	"info": {
+		"_postman_id": "d31b60a5-78b6-45af-992f-2db000574117",
+		"name": "onLineUp API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "sign-in flow",
+			"item": [
+				{
+					"name": "[sign-up/post-email]: post Email to receive OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ntlam19@apcs.fitus.edu.vn\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL-Local}}sign-up/post-email",
+							"host": [
+								"{{URL-Local}}sign-up"
+							],
+							"path": [
+								"post-email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[sign-up/verify-otp]: send OTP,  Email to server to confirm",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"lamnguyen5464@gmail.com\",\r\n    \"otp\": \"832456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL-Local}}sign-up/verify-otp",
+							"host": [
+								"{{URL-Local}}sign-up"
+							],
+							"path": [
+								"verify-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sign-up/use-facebook",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"facebookToken\": \"GGQVlaMmxUWUR2cVRKbVJ4bmJFS0l2WWxMV3FTSXBrOFlGVTB1NWtpa2RGSVo2ZAVJxWGhRcnlPS2ZAyTk10Vl9MMUprLXZAhZA05CVk1PNWc0MGxnbFJIUzJHMWpIb0dKTXJUMVYwd1h3M0I4UFhQNVc3SVo3a2pZAT2ZAYeTZAGYUZAiSnBLbkY4cE5SdU5kS1ZA0RHVoY0tkRXVlc3lTUkNhVTRidgZDZD\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL-Local}}sign-up/use-facebook",
+							"host": [
+								"{{URL-Local}}sign-up"
+							],
+							"path": [
+								"use-facebook"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "URL-Local",
+			"value": "http://localhost:8080/"
+		},
+		{
+			"key": "URL-Heroku",
+			"value": "https://onlineup-server.herokuapp.com/"
+		}
+	]
+}
