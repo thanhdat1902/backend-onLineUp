@@ -47,7 +47,9 @@ public class SignUpService {
         }
 
         return BaseResponse.Builder()
-                .addMessage(status).build();
+                .addMessage(status)
+                .addErrorStatus(status == AuthenticationEnum.SEND_OTP_SUCCESS ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
+                .build();
     }
 
     public ResponseEntity handleVerifyOTP(String email, String OTP) {
@@ -56,6 +58,7 @@ public class SignUpService {
         //TODO return token here
         return BaseResponse.Builder()
                 .addMessage(status)
+                .addErrorStatus(status == AuthenticationEnum.SUCCESS ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
                 .build();
     }
 
