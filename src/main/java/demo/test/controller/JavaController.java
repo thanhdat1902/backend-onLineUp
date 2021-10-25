@@ -1,7 +1,7 @@
 package demo.test.controller;
 
 import demo.test.model.entity.JavaObj;
-import demo.test.model.response.FacebookResponse;
+import demo.test.model.response.EmailVerificationReponse;
 import demo.test.repository.JavaRepository;
 import demo.test.service.business.signup.OTPService;
 import demo.test.service.provider.EmailService;
@@ -40,7 +40,7 @@ public class JavaController {
 
     @GetMapping(path = "/test-fb")
     public @ResponseBody
-    FacebookResponse getUser() {
+    EmailVerificationReponse getUser() {
 
         URI uri = UriComponentsBuilder
                 .fromUriString("https://graph.facebook.com/me")
@@ -50,7 +50,7 @@ public class JavaController {
                 .toUri();
 
 
-        FacebookResponse res = rest.restTemplate.getForObject(uri, FacebookResponse.class);
+        EmailVerificationReponse res = rest.restTemplate.getForObject(uri, EmailVerificationReponse.class);
 
 //        emailService.sendSimpleEmail("ntlam19@apcs.vn", "Subject", "content");
 //        otpService.createForMail("lamnguyem5464@gmail.com");

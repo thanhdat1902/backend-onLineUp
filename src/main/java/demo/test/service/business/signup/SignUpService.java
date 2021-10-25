@@ -3,7 +3,7 @@ package demo.test.service.business.signup;
 import demo.test.common.constant.AuthenticationEnum;
 import demo.test.common.exception.APIException;
 import demo.test.common.response.BaseResponse;
-import demo.test.model.response.FacebookResponse;
+import demo.test.model.response.EmailVerificationReponse;
 import demo.test.service.database.ProfileService;
 import demo.test.service.provider.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +46,7 @@ public class SignUpService {
             status = otpService.createForMail(email);
         }
 
+
         return BaseResponse.Builder()
                 .addMessage(status)
                 .addErrorStatus(status == AuthenticationEnum.SEND_OTP_SUCCESS ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
@@ -55,8 +56,12 @@ public class SignUpService {
     public ResponseEntity handleVerifyOTP(String email, String OTP) {
         AuthenticationEnum status = otpService.verifyOtpForEmail(email, OTP);
 
+        EmailVerificationReponse res = new EmailVerificationReponse();
+        res.email = email;
+
         //TODO return token here
-        return BaseResponse.Builder()
+        return BaseResponse.<EmailVerificationReponse>Builder()
+                .addData(res)
                 .addMessage(status)
                 .addErrorStatus(status == AuthenticationEnum.SUCCESS ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
                 .build();
@@ -80,7 +85,7 @@ public class SignUpService {
 //    }
 
     public ResponseEntity handleFacebookToken(String token) {
-        FacebookResponse res = restService.requestProfileFromFbToken(token);
+        EmailVerificationReponse res = restService.requestProfileFromFbToken(token);
 
         if (res == null || res.email == null || res.email.equals("")) {
             throw new APIException(
@@ -99,7 +104,7 @@ public class SignUpService {
         }
 
         //TODO: ADD token here
-        return BaseResponse.<FacebookResponse>Builder()
+        return BaseResponse.<EmailVerificationReponse>Builder()
                 .addData(res)
                 .addMessage(AuthenticationEnum.FACEBOOK_SUCCESS)
                 .build();
