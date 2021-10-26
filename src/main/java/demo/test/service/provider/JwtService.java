@@ -1,6 +1,9 @@
 package demo.test.service.provider;
 
 
+import demo.test.common.constant.AuthenticationEnum;
+import demo.test.common.exception.APIException;
+import demo.test.common.response.BaseResponse;
 import demo.test.security.principal.UserPrincipal;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -62,17 +65,26 @@ public class JwtService {
             getAllClaimsFromToken(authToken);
             return true;
         } catch (SignatureException e) {
-            logger.error("Invalid JWT signature -> Message: {} ", e);
+            throw new APIException(
+                    BaseResponse.Builder().addMessage(AuthenticationEnum.INVALID_SIGNATURE_TOKEN)
+            );
         } catch (MalformedJwtException e) {
-            logger.error("Invalid JWT token -> Message: {}", e);
+            throw new APIException(
+                    BaseResponse.Builder().addMessage(AuthenticationEnum.INVALID_TOKEN)
+            );
         } catch (ExpiredJwtException e) {
-            logger.error("Expired JWT token -> Message: {}", e);
+            throw new APIException(
+                    BaseResponse.Builder().addMessage(AuthenticationEnum.EXPIRED_TOKEN)
+            );
         } catch (UnsupportedJwtException e) {
-            logger.error("Unsupported JWT token -> Message: {}", e);
+            throw new APIException(
+                    BaseResponse.Builder().addMessage(AuthenticationEnum.UNSUPPORTED_TOKEN)
+            );
         } catch (IllegalArgumentException e) {
-            logger.error("JWT claims string is empty -> Message: {}", e);
+            throw new APIException(
+                    BaseResponse.Builder().addMessage(AuthenticationEnum.CLAIM_EMPTY_TOKEN)
+            );
         }
-        return false;
     }
 
     // Helper function
