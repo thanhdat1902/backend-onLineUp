@@ -62,4 +62,8 @@ public class ProfileService implements IUserService {
         }
         return true;
     }
+
+    public void createAccount(String email, String fullName, String password) {
+        save(new ProfileEntity(email, fullName, password));
+    }
 }
