@@ -1,12 +1,15 @@
 package demo.test.service.business.signup;
 
 import demo.test.common.constant.AuthenticationEnum;
+import demo.test.common.exception.APIException;
+import demo.test.common.response.BaseResponse;
 import demo.test.common.utils.NumberUtils;
 import demo.test.common.utils.TimeUtils;
 import demo.test.model.entity.OTPEntity;
 import demo.test.repository.OTPRepository;
 import demo.test.service.provider.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -20,19 +23,20 @@ public class OTPService {
     @Autowired
     private EmailService emailService;
 
-    public AuthenticationEnum createForMail(String mail) {
+    public void createForMail(String mail) {
         String randomOTP = NumberUtils.generateRandomString(6);
         OTPEntity otpEntity = new OTPEntity(mail, randomOTP, TimeUtils.getCurrentTimestamp());
 
         //send OTP to mail
         boolean didSendOTP = emailService.sendSimpleEmail(mail, "Test OTP", "Your OTP is " + randomOTP);
         if (!didSendOTP) {
-            return AuthenticationEnum.INVALID_EMAIL;
+            throw new APIException(BaseResponse.Builder()
+                    .addErrorStatus(HttpStatus.BAD_REQUEST)
+                    .addMessage(AuthenticationEnum.INVALID_EMAIL)
+            );
         }
-
         //Save to db
         otpRepository.save(otpEntity);
-        return AuthenticationEnum.SEND_OTP_SUCCESS;
     }
 
 

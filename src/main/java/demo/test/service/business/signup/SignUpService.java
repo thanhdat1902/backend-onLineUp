@@ -1,11 +1,15 @@
 package demo.test.service.business.signup;
 
 import demo.test.common.constant.AuthenticationEnum;
+import demo.test.common.exception.APIException;
 import demo.test.common.response.BaseResponse;
 import demo.test.model.response.FacebookResponse;
+import demo.test.model.response.JwtResponse;
 import demo.test.service.database.ProfileService;
+import demo.test.service.provider.JwtService;
 import demo.test.service.provider.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,31 +25,33 @@ public class SignUpService {
     @Autowired
     private RestService restService;
 
-    private boolean validateEmail(String email) {
-        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
-        return email.matches(regex);
-    }
+    @Autowired
+    private JwtService jwtService;
 
-    public boolean handleInputEmail(String email) {
-        if (validateEmail(email)) {
-            otpService.createForMail(email);
-            return true;
-        }
-        return false;
-    }
+//    public boolean handleInputEmail(String email) {
+//        if (Validator.IsEmail(email)) {
+//            otpService.createForMail(email);
+//            return true;
+//        }
+//        return false;
+//    }
 
     //ham handle input email
     public ResponseEntity handleInputEmailForOTP(String email) {
-        AuthenticationEnum status;
 
         if (profileService.existingEmail(email)) {
-            status = AuthenticationEnum.EXISTING_EMAIL;
+            throw new APIException(BaseResponse.Builder()
+                    .addErrorStatus(HttpStatus.BAD_REQUEST)
+                    .addMessage(AuthenticationEnum.EXISTING_EMAIL)
+            );
         } else {
-            status = otpService.createForMail(email);
+            otpService.createForMail(email);
         }
 
+        String token = jwtService.generateTokenFromEmail(email);
         return BaseResponse.Builder()
-                .addMessage(status).build();
+                .addData(new JwtResponse(token))
+                .addMessage(AuthenticationEnum.SEND_OTP_SUCCESS).build();
     }
 
     public ResponseEntity handleVerifyOTP(String email, String OTP) {
