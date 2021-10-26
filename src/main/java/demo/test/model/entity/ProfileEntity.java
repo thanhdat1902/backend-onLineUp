@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name = "Profile")
 public class ProfileEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column(unique = true, nullable = false)
@@ -23,20 +23,11 @@ public class ProfileEntity {
     public ProfileEntity() {
     }
 
-    public ProfileEntity(String email, String password) {
+    public ProfileEntity(String email, String fullName, String password) {
         this.email = email;
         this.password = password;
+        this.fullName = fullName;
         this.roles = "USER";
-    }
-
-    private String username;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String name) {
-        this.username = username;
     }
 
     public int getId() {
@@ -46,7 +37,6 @@ public class ProfileEntity {
     public void setId(int id) {
         this.id = id;
     }
-
 
     private String roles;
 

@@ -40,26 +40,16 @@ public class OTPService {
     }
 
 
-    public AuthenticationEnum verifyOtpForEmail(String email, String otp) {
+    public void verifyOtpForEmail(String email, String otp) {
         try {
             OTPEntity userOTP = otpRepository.getById(email);
-            AuthenticationEnum status = checkValidOtp(otp, userOTP);
-
-            switch (status) {
-                case SUCCESS:
-                case END_OF_TRY:
-                case TIME_OUT:
-                    removeForEmail(email);
-                    break;
-                case WRONG:
-                    decreaseAttempt(userOTP);
-                    break;
-                default:
-            }
-
-            return status;
+            checkValidOtp(otp, email, userOTP);
+            removeForEmail(email);
         } catch (EntityNotFoundException ignored) {
-            return AuthenticationEnum.NOT_FOUND;
+            throw new APIException(BaseResponse.Builder()
+                    .addErrorStatus(HttpStatus.BAD_REQUEST)
+                    .addMessage(AuthenticationEnum.NOT_FOUND)
+            );
         }
     }
 
@@ -72,22 +62,32 @@ public class OTPService {
         otpRepository.save(otpEntity);
     }
 
-    private AuthenticationEnum checkValidOtp(String otp, OTPEntity otpEntity) {
+    private void checkValidOtp(String otp, String email, OTPEntity otpEntity) {
 
         if (otpEntity.getTimeRetry() < 0) {
-            return AuthenticationEnum.END_OF_TRY;
+            removeForEmail(email);
+            throw new APIException(BaseResponse.Builder()
+                    .addErrorStatus(HttpStatus.BAD_REQUEST)
+                    .addMessage(AuthenticationEnum.END_OF_TRY)
+            );
         }
 
         if (!otpEntity.getOTP().equals(otp)) {
-            return AuthenticationEnum.WRONG;
+            decreaseAttempt(otpEntity);
+            throw new APIException(BaseResponse.Builder()
+                    .addErrorStatus(HttpStatus.BAD_REQUEST)
+                    .addMessage(AuthenticationEnum.WRONG)
+            );
         }
 
         long currentTime = TimeUtils.getCurrentTimestamp();
         if (currentTime - otpEntity.getCreateTime() > 60 * 1000 * 60) {     //1 hour
-            return AuthenticationEnum.TIME_OUT;
+            removeForEmail(email);
+            throw new APIException(BaseResponse.Builder()
+                    .addErrorStatus(HttpStatus.BAD_REQUEST)
+                    .addMessage(AuthenticationEnum.TIME_OUT)
+            );
         }
-
-        return AuthenticationEnum.SUCCESS;
     }
 
     public int responseVerifyOtpEmail(String email, String otp) {

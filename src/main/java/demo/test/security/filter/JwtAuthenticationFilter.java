@@ -60,7 +60,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
             // Handle OTP Token Valid
             if (token_otp != null && jwtService.validateJwtToken(token_otp)) {
-                String username = jwtService.getUserNameFromJwtToken(jwt);
+                String username = jwtService.getUserNameFromJwtToken(token_otp);
                 if (!username.equals(email)) {
                     resolver.resolveException(request, response, null, new APIException(
                             BaseResponse.Builder().addErrorStatus(HttpStatus.BAD_REQUEST)

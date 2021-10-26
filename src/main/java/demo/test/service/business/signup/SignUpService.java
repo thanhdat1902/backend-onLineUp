@@ -48,37 +48,26 @@ public class SignUpService {
             otpService.createForMail(email);
         }
 
-        String token = jwtService.generateTokenFromEmail(email);
+
         return BaseResponse.Builder()
-                .addData(new JwtResponse(token))
                 .addMessage(AuthenticationEnum.SEND_OTP_SUCCESS).build();
     }
 
     public ResponseEntity handleVerifyOTP(String email, String OTP) {
-        AuthenticationEnum status = otpService.verifyOtpForEmail(email, OTP);
-
-        //TODO return token here
+        otpService.verifyOtpForEmail(email, OTP);
+        String token = jwtService.generateTokenFromEmail(email);
         return BaseResponse.Builder()
-                .addMessage(status)
+                .addData(new JwtResponse(token))
+                .addMessage(AuthenticationEnum.OTP_SUCCESS)
                 .build();
     }
 
-//    public BaseResponse handleCreateAccount(String username, String email, String password, String confirmPassword) {
-//        AuthenticationEnum status;
-//        if (username == null || profileService.existingUsername(username)) {
-//            status = AuthenticationEnum.USERNAME_ERROR;
-//        } else if (!password.equals(confirmPassword)) {
-//            status = AuthenticationEnum.CONFIRM_PASSWORD_FAIL;
-//        } else {
-//            profileService.createAccount(username, password, email);
-//            status = AuthenticationEnum.CREATE_ACCOUNT_SUCCESS;
-//        }
-//        return BaseResponse.Builder()
-//                .addStatus(status == AuthenticationEnum.CREATE_ACCOUNT_SUCCESS)
-//                .addCode(status.getDescCode())
-//                .addDesc(status.getDesc())
-//                .build();
-//    }
+    public ResponseEntity handleCreateAccount(String email, String fullname, String password) {
+        profileService.createAccount(email, fullname, password);
+        return BaseResponse.Builder()
+                .addMessage(AuthenticationEnum.CREATE_ACCOUNT_SUCCESS)
+                .build();
+    }
 
     public ResponseEntity handleFacebookToken(String token) {
         FacebookResponse res = null;

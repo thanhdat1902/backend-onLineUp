@@ -3,6 +3,7 @@ package demo.test.controller;
 import demo.test.model.request.InputEmailOtpRequest;
 import demo.test.model.request.InputEmailRequest;
 import demo.test.model.request.InputFacebookRequest;
+import demo.test.model.request.InputInformationRequest;
 import demo.test.service.business.signup.OTPService;
 import demo.test.service.business.signup.SignUpService;
 import demo.test.service.provider.RestService;
@@ -47,14 +48,13 @@ public class SignUpController {
         return signupService.handleFacebookToken(facebookRequest.facebookToken);
     }
 
-    //input username, password and confirm password
-
-//    @PostMapping(value = "/create-account")
-//    @ResponseBody
-//    public BaseResponse postInformation(@RequestBody InputInformationRequest requestInformation) {
-//        return signupService.handleCreateAccount(requestInformation.username, requestInformation.email,
-//                requestInformation.password, requestInformation.confirmPassword);
-//    }
+    //input fullname, password and confirm password
+    @PostMapping(value = "/create-account")
+    @ResponseBody
+    public ResponseEntity postInformation(@RequestBody InputInformationRequest requestInformation) {
+        return signupService.handleCreateAccount(requestInformation.email, requestInformation.fullname,
+                requestInformation.password);
+    }
 
 
 }
