@@ -1,6 +1,6 @@
 package demo.test.service.provider;
 
-import demo.test.model.response.FacebookResponse;
+import demo.test.model.response.EmailVerificationReponse;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
@@ -18,12 +18,12 @@ public class RestService {
         this.restTemplate = restTemplateBuilder.build();
     }
 
-    public FacebookResponse getPostsPlainJSON() {
+    public EmailVerificationReponse getPostsPlainJSON() {
         String url = "https://graph.facebook.com/me?fields=email&access_token=GGQVlaMU5DYXg0M2tyTVJhZAXlBTTNpMDBTWktLVzM1T2VyZA3VnNk5ObkhXbzJOYWF2OHJQRk05dG1NSnpUTW9fVV94N2RGR0s5clBMRzVZAclVKR3UxbHpXb1VPMlByWTVKTHdqbHJjWkpnWUpJVWtiZAElNUVdHdXl5NTN0NUdPX0hGWjVnTU50eS1UckR3ck1SY3J3b3V0TTdLRmZAUbFEZD";
-        return this.restTemplate.getForObject(url, FacebookResponse.class);
+        return this.restTemplate.getForObject(url, EmailVerificationReponse.class);
     }
 
-    public FacebookResponse requestProfileFromFbToken(String token) {
+    public EmailVerificationReponse requestProfileFromFbToken(String token) {
         URI uri = UriComponentsBuilder
                 .fromUriString("https://graph.facebook.com/me")
                 .queryParam("fields", "email")
@@ -31,9 +31,9 @@ public class RestService {
                 .build()
                 .toUri();
         try {
-            return this.restTemplate.getForObject(uri, FacebookResponse.class);
+            return this.restTemplate.getForObject(uri, EmailVerificationReponse.class);
         } catch (RestClientException e) {
-            return new FacebookResponse();
+            return null;
         }
     }
 }

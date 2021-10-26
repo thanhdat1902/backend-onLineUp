@@ -3,8 +3,7 @@ package demo.test.service.business.signup;
 import demo.test.common.constant.AuthenticationEnum;
 import demo.test.common.exception.APIException;
 import demo.test.common.response.BaseResponse;
-import demo.test.model.response.FacebookResponse;
-import demo.test.model.response.JwtResponse;
+import demo.test.model.response.EmailVerificationReponse;
 import demo.test.service.database.ProfileService;
 import demo.test.service.provider.JwtService;
 import demo.test.service.provider.RestService;
@@ -57,7 +56,7 @@ public class SignUpService {
         otpService.verifyOtpForEmail(email, OTP);
         String token = jwtService.generateTokenFromEmail(email);
         return BaseResponse.Builder()
-                .addData(new JwtResponse(token))
+                .addData(new EmailVerificationReponse(email, token))
                 .addMessage(AuthenticationEnum.OTP_SUCCESS)
                 .build();
     }
@@ -70,20 +69,30 @@ public class SignUpService {
     }
 
     public ResponseEntity handleFacebookToken(String token) {
-        FacebookResponse res = null;
-        AuthenticationEnum status = AuthenticationEnum.FACEBOOK_SUCCESS;
-        res = restService.requestProfileFromFbToken(token);
+        EmailVerificationReponse res = restService.requestProfileFromFbToken(token);
+
         if (res == null || res.email == null || res.email.equals("")) {
-            status = AuthenticationEnum.FACEBOOK_FAIL;
+            throw new APIException(
+                    BaseResponse.Builder()
+                            .addMessage(AuthenticationEnum.FACEBOOK_FAIL)
+                            .addErrorStatus(HttpStatus.BAD_REQUEST)
+            );
         }
+
         if (profileService.existingEmail(res.email)) {
-            status = AuthenticationEnum.EXISTING_EMAIL;
+            throw new APIException(
+                    BaseResponse.Builder()
+                            .addMessage(AuthenticationEnum.EXISTING_EMAIL)
+                            .addErrorStatus(HttpStatus.BAD_REQUEST)
+            );
         }
 
         //TODO: ADD token here
-        return BaseResponse.<FacebookResponse>Builder()
+        res.accessToken = jwtService.generateTokenFromEmail(res.email);
+        return BaseResponse.<EmailVerificationReponse>Builder()
                 .addData(res)
-                .addMessage(status).build();
+                .addMessage(AuthenticationEnum.FACEBOOK_SUCCESS)
+                .build();
     }
 
 }
