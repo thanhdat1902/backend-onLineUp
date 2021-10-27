@@ -1,20 +1,25 @@
 Login phase01
     - userInfo
-        - NanoID
         - email
-        - sdt
-        - userName
+        - sdt (not yet)
         - password
         - Full name
-        - Fb Id
-        - GG Id
-
+        - Fb Id (not yet)
+        - GG Id (N/A)
         - avatar (app-gen)
 
     - userOtp
         - userID
         - current opt
+        - retry time
+        - tim create
 
     - login with email -> BE send otp to email -> user verify otp -> BE send access token (not yet)
 
     - login with fb, gg -> App sign in with sdk -> get sdk_token -> send sdk token to BE -> BE verify -> send access token (not yet)
+
+Login phase 02:
+    - Doi mk: Bam quen mk (chua co token) -> nhap email -> xac nhan otp -> doi mk moi (Tai backend)
+    - Sign in;
+    - Rap api tiep o web (register)
+    - Define content app
