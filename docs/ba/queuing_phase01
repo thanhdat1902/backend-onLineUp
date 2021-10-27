@@ -1,0 +1,60 @@
+Phase 01:
+    - Problem:
+        - Hang doi qua dai
+        - Ko biet khi nao toi luot
+        - Toi thong bao tung nha/tung nguoi
+        - Ho se bi miss thong tin
+        - Nang/mua
+        - Tap trung dong nguoi -> lay nhiem covid
+        - Danh sach: giay (lam bang tay)
+        - Scope: Phat tien tro cap, Lay so ngan hang, Xep hang tiem chung, Dang ki nhap hoc, Xep hang o quan an cho shipper, Camp hang, Khu vui choi, Cong chung (Nha nuoc)
+
+    - Flow:
+        - tao phong: Thiet ke DB
+            - Room:
+              - ID (6 random unique numbers)  -> generate QR (save QR o dau?)
+              - Ten phong
+              - Mo ta (dia chi): Ten to chuc, ten nguoi tao phong, muc dich, ghi chu
+              - Time bat dau
+              - limit user join
+              - currentIndex
+
+              + status (now() ~ time bat dau)
+
+              - customization (later)
+            - AdminRoom:
+                - userID (email cua admin)
+                - RoomID
+            - UserRoom:
+                - userID (email)
+                - RoomId
+
+             - Profile
+                     - email
+                     - sdt (not yet)
+                     - password
+                     - Full name
+                     - Fb Id (not yet)
+                     - GG Id (N/A)
+                     - avatar (app-gen)
+
+              - NotiUser:
+                    - userId (email)
+                    - notiId
+                    - seen
+
+              - Noti:
+                    - id
+                    - title
+                    - content:
+                    - date
+                    - cta
+        - API tao room
+            - user request create-room -> create Entity in Room -> create Entity in table AdminRoom -> response room Info
+            - api get roomInfo (roomID)
+        - API update room info (only admin):
+            - admin request update-room-info (roomID, roomInfo) -> checkIf is admin in this room -> update info in table Room
+        - API join room:
+            - user req join-room (roomId):  add in UserRoom
+
+        - notification:
