@@ -66,4 +66,13 @@ public class ProfileService implements IUserService {
     public void createAccount(String email, String fullName, String password) {
         save(new ProfileEntity(email, fullName, password));
     }
+
+    public void updatePassword(String email, String password) {
+        if (email != null) {
+            Optional<ProfileEntity> user = profileRepository.findByEmail(email);
+            user.get().setPassword(passwordEncoder.encode(password));
+            profileRepository.save(user.get());
+        }
+    }
+
 }
