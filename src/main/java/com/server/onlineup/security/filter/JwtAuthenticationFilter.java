@@ -81,8 +81,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         } catch (Exception e) {
             resolver.resolveException(request, response, null, e);
+            return;
         }
-
         filterChain.doFilter(multiReadRequest, response);
     }
 
@@ -99,9 +99,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String getParamFromRequest(HttpServletRequest request, String headerParam) {
         String authHeader = request.getHeader(headerParam);
-        if (!authHeader.isEmpty()) {
-            return authHeader;
-        }
-        return null;
+        return authHeader;
     }
 }
