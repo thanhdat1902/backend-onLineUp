@@ -139,7 +139,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"nguyencongtai7252@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+									"raw": "{\r\n    \"email\": \"nguyencongtai7252@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -196,7 +196,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"nguyencongtai7252@gmail.com\",\r\n    \"otp\": \"044034\"\r\n}",
+									"raw": "{\r\n    \"email\": \"nguyencongtai7252@gmail.com\",\r\n    \"otp\": \"686212\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -225,13 +225,13 @@
 								"header": [
 									{
 										"key": "token_otp",
-										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ3V5ZW5jb25ndGFpNzI1MkBnbWFpbC5jb20iLCJpYXQiOjE2MzU0MzUyNjQsImV4cCI6MTYzNTQzODg2NH0.a7ozHqw9r9mi6r9-G_Js73tSqmQuP_TXWoFaGWGjhws",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ3V5ZW5jb25ndGFpNzI1MkBnbWFpbC5jb20iLCJpYXQiOjE2MzU0MzU1OTAsImV4cCI6MTYzNTQzOTE5MH0.uRLYEvQtF1KTVtULj1aogi7j3cPcOVIYqG9T62r5djo",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"nguyencongtai7252@gmail.com\",\r\n    \"newPass\": \"123\",\r\n    \"confirmNewPass\": \"123\"\r\n}",
+									"raw": "{\r\n    \"email\": \"nguyencongtai7252@gmail.com\",\r\n    \"newPass\": \"123456\",\r\n    \"confirmNewPass\": \"123456\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
