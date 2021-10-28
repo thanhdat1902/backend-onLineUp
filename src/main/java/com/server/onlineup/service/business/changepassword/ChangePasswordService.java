@@ -51,7 +51,7 @@ public class ChangePasswordService {
                     .addMessage(AuthenticationEnum.INVALID_EMAIL)
             );
         }
-        if (!newPass.equals(confirmNewPass)) {
+        if (newPass == null || newPass.equals("") || !newPass.equals(confirmNewPass)) {
             throw new APIException(BaseResponse.Builder()
                     .addErrorStatus(HttpStatus.BAD_REQUEST)
                     .addMessage(AuthenticationEnum.WRONG_CONFIRM_PASSWORD)

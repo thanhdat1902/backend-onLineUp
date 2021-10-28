@@ -18,7 +18,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\"\r\n}",
+									"raw": "{\r\n    \"email\": \"nguyencongtai7252@gmail.com\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -139,7 +139,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\",\r\n    \"password\": \"12345678900\"\r\n}",
+									"raw": "{\r\n    \"email\": \"nguyencongtai7252@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -167,7 +167,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\"\r\n}",
+									"raw": "{\r\n    \"email\": \"nguyencongtai7252@gmail.com\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -196,7 +196,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\",\r\n    \"otp\": \"015793\"\r\n}",
+									"raw": "{\r\n    \"email\": \"nguyencongtai7252@gmail.com\",\r\n    \"otp\": \"044034\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -225,13 +225,13 @@
 								"header": [
 									{
 										"key": "token_otp",
-										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4bW9ua2V5ZGx1ZnhAZ21haWwuY29tIiwiaWF0IjoxNjM1NDMyODM1LCJleHAiOjE2MzU0MzY0MzV9.DBOU68n3bsfPH15L3eN-_OJxhj3q1pq-DqacXGMv9L0",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ3V5ZW5jb25ndGFpNzI1MkBnbWFpbC5jb20iLCJpYXQiOjE2MzU0MzUyNjQsImV4cCI6MTYzNTQzODg2NH0.a7ozHqw9r9mi6r9-G_Js73tSqmQuP_TXWoFaGWGjhws",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\",\r\n    \"newPass\": \"12345678900\",\r\n    \"confirmNewPass\": \"12345678900\"\r\n}",
+									"raw": "{\r\n    \"email\": \"nguyencongtai7252@gmail.com\",\r\n    \"newPass\": \"123\",\r\n    \"confirmNewPass\": \"123\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
