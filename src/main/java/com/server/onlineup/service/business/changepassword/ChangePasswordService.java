@@ -6,7 +6,7 @@ import com.server.onlineup.common.response.BaseResponse;
 import com.server.onlineup.model.response.EmailVerificationReponse;
 import com.server.onlineup.service.business.signup.OTPService;
 import com.server.onlineup.service.database.ProfileService;
-import com.server.onlineup.service.provider.JwtService;
+import com.server.onlineup.service.provider.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

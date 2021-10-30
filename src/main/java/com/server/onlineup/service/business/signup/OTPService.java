@@ -7,7 +7,7 @@ import com.server.onlineup.common.utils.NumberUtils;
 import com.server.onlineup.common.utils.TimeUtils;
 import com.server.onlineup.model.entity.OTPEntity;
 import com.server.onlineup.repository.OTPRepository;
-import com.server.onlineup.service.provider.EmailService;
+import com.server.onlineup.service.provider.mailer.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

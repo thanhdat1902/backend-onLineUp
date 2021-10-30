@@ -7,7 +7,7 @@ import com.server.onlineup.common.utils.JsonUtils;
 import com.server.onlineup.common.validate.Validator;
 import com.server.onlineup.security.wrapper.MultiReadHttpServletRequest;
 import com.server.onlineup.service.implementation.IUserService;
-import com.server.onlineup.service.provider.JwtService;
+import com.server.onlineup.service.provider.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;

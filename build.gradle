@@ -23,6 +23,9 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-mail"
     implementation 'com.sun.mail:javax.mail:1.6.2'
 
+    // firebase
+    implementation "com.google.firebase:firebase-admin:7.0.0"
+
     runtimeOnly "mysql:mysql-connector-java"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 
