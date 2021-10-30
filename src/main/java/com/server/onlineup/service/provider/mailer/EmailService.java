@@ -1,4 +1,4 @@
-package com.server.onlineup.service.provider;
+package com.server.onlineup.service.provider.mailer;
 
 import com.server.onlineup.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;

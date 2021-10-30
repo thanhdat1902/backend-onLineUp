@@ -1,4 +1,4 @@
-package com.server.onlineup.service.provider;
+package com.server.onlineup.service.provider.rest;
 
 import com.server.onlineup.model.response.EmailVerificationReponse;
 import org.springframework.boot.web.client.RestTemplateBuilder;

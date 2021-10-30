@@ -1,4 +1,4 @@
-package com.server.onlineup.service.provider;
+package com.server.onlineup.service.provider.jwt;
 
 
 import com.server.onlineup.common.constant.AuthenticationEnum;
