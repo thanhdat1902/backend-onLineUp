@@ -8,6 +8,39 @@ Phase 01:
         - Tap trung dong nguoi -> lay nhiem covid
         - Danh sach: giay (lam bang tay)
         - Scope: Phat tien tro cap, Lay so ngan hang, Xep hang tiem chung, Dang ki nhap hoc, Xep hang o quan an cho shipper, Camp hang, Khu vui choi, Cong chung (Nha nuoc)
+            - Banking:
+                - host: tao phong for all -> cho nguoi ta so -> toi luot -> xac nhan
+                        + merge 2 tap khach hang: co app, ko co app
+                - queuer
+            - Phat tien tro cap:
+                - host: tao phong (cho nhung ng co trong ds) -> lay so -> xac nhan -> phat tro cap -> ki len giay (export excel)
+                        + merge 2 tap khach hang: co app, ko co app
+                - queuer
+            - Dang ki nhap hoc:
+                -host: Phong co nhieu checkpoints, export excel
+4,5    (3)-> (1) 1, 2    -> (2)
+                -queuer:
+
+            Lan luot:
+
+            stage:
+atHome (lay so, hang doi co the chua dien ra/da dien ra roi)     ->     ready (chuan bi/dang di)    ->    xac nhan (quet ma)     -> inWork(_________)    -> done
+
+
+          Variables:
+
+         - nUMBER_OF_INWORK_PEOPLE
+
+         - TIME_PER_PERSON: CONST
+
+         - TIME_DONE: 01:00:07
+         - CURRENT_ORDER: 2
+
+         - (1): 01:00:00
+         - (2): 01:00:07
+
+   (3) - UI : TIME_DONE  + (3-CURRENT_ORDER) * TIME_PER_PERSON
+
 
     - Flow:
         - tao phong: Thiet ke DB
@@ -18,6 +51,8 @@ Phase 01:
               - Time bat dau
               - limit user join
               - currentIndex
+
+              - custom
 
               + status (now() ~ time bat dau)
 
