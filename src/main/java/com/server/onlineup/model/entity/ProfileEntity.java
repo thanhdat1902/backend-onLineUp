@@ -18,7 +18,51 @@ public class ProfileEntity {
     @Column(nullable = false)
     private String fullName;
 
+    @Column
+    private String fb_id;
+
+    @Column
+    private String fcm_token;
+
+    public String getFb_id() {
+        return fb_id;
+    }
+
+    public void setFb_id(String fb_id) {
+        this.fb_id = fb_id;
+    }
+
+    public String getFcm_token() {
+        return fcm_token;
+    }
+
+    public void setFcm_token(String fcm_token) {
+        this.fcm_token = fcm_token;
+    }
+
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getFbId() {
+        return fb_id;
+    }
+
+    public void setFbId(String fbId) {
+        this.fb_id = fbId;
+    }
+
+
     public ProfileEntity() {
+    }
+
+    public ProfileEntity(String email, String id) {
+        this.email = email;
+        this.fb_id = id;
+        this.password = "TmPpAsS";
+        this.fullName = "Unknown";
+        this.roles = "USER";
     }
 
     public ProfileEntity(String email, String fullName, String password) {

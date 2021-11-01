@@ -1,6 +1,7 @@
 package com.server.onlineup.controller;
 
 import com.server.onlineup.model.entity.ProfileEntity;
+import com.server.onlineup.model.request.InputFacebookRequest;
 import com.server.onlineup.service.business.signin.SignInService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,5 +20,10 @@ public class SignInController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody ProfileEntity user) {
         return signinService.handleSignIn(user);
+    }
+
+    @PostMapping("/login-facebook")
+    public ResponseEntity<?> loginWithFacebook(@RequestBody InputFacebookRequest req) {
+        return signinService.handleSignInWithFacebook(req.facebookToken);
     }
 }

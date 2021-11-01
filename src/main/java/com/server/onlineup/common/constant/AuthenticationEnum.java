@@ -32,7 +32,10 @@ public enum AuthenticationEnum implements BaseEnum {
     // Forget Password
     NOT_EXISTING_EMAIL_TO_RESET_PASS("Your email is not available to reset password", "not_exist_email"),
     WRONG_CONFIRM_PASSWORD("Confirm password unsuccessfully", "wrong_confirm_password"),
-    CHANGE_PASS_SUCCESS("Change password successfully", "change_pass_success");
+    CHANGE_PASS_SUCCESS("Change password successfully", "change_pass_success"),
+
+    // Using Facebook
+    FAIL_FACEBOOK_SIGN_IN("Something wrong with your facebook", "fail_facebook_sign_in");
 
     AuthenticationEnum(String desc, String descCode) {
         this.desc = desc;
