@@ -18,7 +18,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"nguyencongtai7252@gmail.com\"\r\n}",
+									"raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -44,7 +44,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\",\r\n    \"otp\": \"762497\"\r\n}",
+									"raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\",\r\n    \"otp\": \"206296\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -99,7 +99,7 @@
 								"header": [
 									{
 										"key": "token_otp",
-										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsYW1uZ3V5ZW41NDY0QGdtYWlsLmNvbSIsImlhdCI6MTYzNTI2NjA4OSwiZXhwIjoxNjM1MjY5Njg5fQ.n1CR6HQlY_Sx5DY7dxJoE27wqVbIeH3rvRdh6A5scsU",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4bW9ua2V5ZGx1ZnhAZ21haWwuY29tIiwiaWF0IjoxNjM1Nzc0NzI5LCJleHAiOjE2MzU3NzgzMjl9.Av5yHPGh2CpegXHIzvDyaZlrQH17OvBz6LM_BRNAWMM",
 										"type": "text"
 									}
 								],
@@ -130,7 +130,7 @@
 					"name": "Sign In",
 					"item": [
 						{
-							"name": "New Request",
+							"name": "Login with Email",
 							"request": {
 								"auth": {
 									"type": "noauth"
@@ -139,7 +139,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"nguyencongtai7252@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+									"raw": "{\r\n    \"email\": \"lamnguyen5464@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -150,6 +150,32 @@
 									"raw": "{{URL-Local}}login",
 									"host": [
 										"{{URL-Local}}login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login with Facebook",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"facebookToken\": \"GGQVlaMU5DYXg0M2tyTVJhZAXlBTTNpMDBTWktLVzM1T2VyZA3VnNk5ObkhXbzJOYWF2OHJQRk05dG1NSnpUTW9fVV94N2RGR0s5clBMRzVZAclVKR3UxbHpXb1VPMlByWTVKTHdqbHJjWkpnWUpJVWtiZAElNUVdHdXl5NTN0NUdPX0hGWjVnTU50eS1UckR3ck1SY3J3b3V0TTdLRmZAUbFEZD\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL-Local}}login-facebook",
+									"host": [
+										"{{URL-Local}}login-facebook"
 									]
 								}
 							},

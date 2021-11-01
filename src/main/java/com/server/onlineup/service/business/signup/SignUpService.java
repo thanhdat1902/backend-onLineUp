@@ -62,7 +62,9 @@ public class SignUpService {
     }
 
     public ResponseEntity handleCreateAccount(String email, String fullname, String password) {
-        profileService.createAccount(email, fullname, password);
+        if (!profileService.existingEmail(email)) {
+            profileService.createAccount(email, fullname, password);
+        } else profileService.updateAccount(email, fullname, password);
         return BaseResponse.Builder()
                 .addMessage(AuthenticationEnum.CREATE_ACCOUNT_SUCCESS)
                 .build();
@@ -87,8 +89,8 @@ public class SignUpService {
             );
         }
 
-        //TODO: ADD token here
         res.accessToken = jwtService.generateTokenFromEmail(res.email);
+        profileService.createAccountFb(res.email, res.id);
         return BaseResponse.<EmailVerificationReponse>Builder()
                 .addData(res)
                 .addMessage(AuthenticationEnum.FACEBOOK_SUCCESS)

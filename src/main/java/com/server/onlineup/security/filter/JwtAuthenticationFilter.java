@@ -44,7 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String token_otp = getParamFromRequest(request, "token_otp");
             String jwt = getJwtFromRequest(request);
             String email = JsonUtils.GetAttrBodyFromRequest(multiReadRequest, "email");
-            if (!Validator.IsEmail(email)) {
+            if (email != null && !Validator.IsEmail(email)) {
                 resolver.resolveException(request, response, null, new APIException(
                         BaseResponse.Builder().addErrorStatus(HttpStatus.BAD_REQUEST)
                                 .addMessage(AuthenticationEnum.INVALID_EMAIL)

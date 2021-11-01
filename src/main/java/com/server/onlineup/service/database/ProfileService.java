@@ -75,4 +75,27 @@ public class ProfileService implements IUserService {
         }
     }
 
+    public void createAccountFb(String email, String id) {
+        save(new ProfileEntity(email, id));
+    }
+
+    public void updateAccount(String email, String fullname, String password) {
+        if (email != null) {
+            Optional<ProfileEntity> user = profileRepository.findByEmail(email);
+            user.get().setPassword(passwordEncoder.encode(password));
+            user.get().setFullname(fullname);
+            profileRepository.save(user.get());
+        }
+    }
+
+    public boolean isUseFb(String email, String idFb) {
+        if (email == null) {
+            return false;
+        }
+        Optional<ProfileEntity> user = profileRepository.findByEmail(email);
+        if (user.get().getFbId().equals(idFb)) {
+            return true;
+        }
+        return false;
+    }
 }
