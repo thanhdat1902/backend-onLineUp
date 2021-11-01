@@ -93,7 +93,7 @@ public class ProfileService implements IUserService {
             return false;
         }
         Optional<ProfileEntity> user = profileRepository.findByEmail(email);
-        if (user.get().getFbId().equals(idFb)) {
+        if (user.get().getFb_id().equals(idFb)) {
             return true;
         }
         return false;
