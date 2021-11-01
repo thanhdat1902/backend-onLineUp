@@ -45,15 +45,6 @@ public class ProfileEntity {
         this.fullName = fullName;
     }
 
-    public String getFbId() {
-        return fb_id;
-    }
-
-    public void setFbId(String fbId) {
-        this.fb_id = fbId;
-    }
-
-
     public ProfileEntity() {
     }
 
