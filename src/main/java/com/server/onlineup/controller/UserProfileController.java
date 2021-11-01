@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @CrossOrigin
 @RequestMapping("/forget-password")
-public class ForgetPasswordController {
+public class UserProfileController {
 
     @Autowired
     ChangePasswordService changePasswordService;
