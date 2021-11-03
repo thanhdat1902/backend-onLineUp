@@ -1,5 +1,7 @@
 package com.server.onlineup.model.entity;
 
+import com.server.onlineup.common.utils.NumberUtils;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,17 +21,17 @@ public class ProfileEntity {
     private String fullName;
 
     @Column
-    private String fb_id;
+    private String id_facebook;
 
     @Column
     private String fcm_token;
 
     public String getFb_id() {
-        return fb_id;
+        return id_facebook;
     }
 
     public void setFb_id(String fb_id) {
-        this.fb_id = fb_id;
+        this.id_facebook = fb_id;
     }
 
     public String getFcm_token() {
@@ -50,8 +52,8 @@ public class ProfileEntity {
 
     public ProfileEntity(String email, String id) {
         this.email = email;
-        this.fb_id = id;
-        this.password = "TmPpAsS";
+        this.id_facebook = id;
+        this.password = NumberUtils.generateRandomString((int) (Math.floor(Math.random())));
         this.fullName = "Unknown";
         this.roles = "USER";
     }
