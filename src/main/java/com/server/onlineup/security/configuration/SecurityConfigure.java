@@ -65,7 +65,7 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/login", "/login-facebook", "/sign-up/post-email", "/sign-up/verify-otp",
                         "/sign-up/use-facebook", "/sign-up/create-account", "/forget-password/confirm-email",
-                        "/forget-password/verify-otp", "/forget-password/new-password").permitAll()
+                        "/forget-password/verify-otp", "/forget-password/new-password", "/users/update-fcm-token").permitAll()
 
                 .anyRequest().authenticated()
                 .and().csrf().disable();
