@@ -21,25 +21,25 @@ public class ProfileEntity {
     private String fullName;
 
     @Column
-    private String id_facebook;
+    private String idFacebook;
 
     @Column
-    private String fcm_token;
+    private String fcmToken;
 
     public String getFb_id() {
-        return id_facebook;
+        return idFacebook;
     }
 
     public void setFb_id(String fb_id) {
-        this.id_facebook = fb_id;
+        this.idFacebook = fb_id;
     }
 
     public String getFcm_token() {
-        return fcm_token;
+        return fcmToken;
     }
 
     public void setFcm_token(String fcm_token) {
-        this.fcm_token = fcm_token;
+        this.fcmToken = fcm_token;
     }
 
 
@@ -52,7 +52,7 @@ public class ProfileEntity {
 
     public ProfileEntity(String email, String id) {
         this.email = email;
-        this.id_facebook = id;
+        this.idFacebook = id;
         this.password = NumberUtils.generateRandomString((int) (Math.floor(Math.random())));
         this.fullName = "Unknown";
         this.roles = "USER";
