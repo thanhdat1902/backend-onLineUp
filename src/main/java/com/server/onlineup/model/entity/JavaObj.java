@@ -1,15 +1,21 @@
 package com.server.onlineup.model.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.UUID;
 
 @Entity
 @Table(name = "test_obj_2")
 public class JavaObj {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    public String id;
 
-    private String name;
+    public String name;
+
+    public JavaObj() {
+        this.id = UUID.randomUUID().toString();
+    }
 
     public String getName() {
         return name;
@@ -19,11 +25,4 @@ public class JavaObj {
         this.name = name;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

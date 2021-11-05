@@ -1,82 +1,131 @@
 package com.server.onlineup.controller;
 
+import com.server.onlineup.common.utils.TimeUtils;
 import com.server.onlineup.model.entity.JavaObj;
 import com.server.onlineup.repository.JavaRepository;
-import com.server.onlineup.service.business.signup.OTPService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
+
+import static java.util.concurrent.CompletableFuture.supplyAsync;
+
 @Controller
 @CrossOrigin
-@RequestMapping(path = "/demo")
+@RequestMapping(path = "/test")
 public class JavaController {
     @Autowired
     private JavaRepository userRepository;
 
-//    @Autowired
-//    private RestService rest;
+    @PostMapping(value = "/sync")
+    public @ResponseBody
+    long test() {
+        JavaObj obj = new JavaObj();
+        obj.setName("Test 1");
+        long startTime = TimeUtils.getCurrentTimestamp();
+        userRepository.save(obj);
 
-//    @Autowired
-//    private EmailService emailService;
+        Long size = Long.valueOf(userRepository.findAll().size());
 
-    @Autowired
-    private OTPService otpService;
-
-    @GetMapping(path = "/create-otp")
-    public String createOTP() {
-
-        return "";
+        System.out.println(TimeUtils.getCurrentTimestamp() - startTime + "ms");
+        return size;
+//        return computeVeryLong();
     }
 
-//    @GetMapping(path = "/test-fb")
-//    public @ResponseBody
-//    EmailVerificationReponse getUser() {
-//
-//        URI uri = UriComponentsBuilder
-//                .fromUriString("https://graph.facebook.com/me")
-//                .queryParam("fields", "email")
-//                .queryParam("access_token", "GGQVlaMU5DYXg0M2tyTVJhZAXlBTTNpMDBTWktLVzM1T2VyZA3VnNk5ObkhXbzJOYWF2OHJQRk05dG1NSnpUTW9fVV94N2RGR0s5clBMRzVZAclVKR3UxbHpXb1VPMlByWTVKTHdqbHJjWkpnWUpJVWtiZAElNUVdHdXl5NTN0NUdPX0hGWjVnTU50eS1UckR3ck1SY3J3b3V0TTdLRmZAUbFEZD")
-//                .build()
-//                .toUri();
-//
-//
-//        //EmailVerificationReponse res = rest.restTemplate.getForObject(uri, EmailVerificationReponse.class);
-//
-////        emailService.sendSimpleEmail("ntlam19@apcs.vn", "Subject", "content");
-////        otpService.createForMail("lamnguyem5464@gmail.com");
-////        otpService.createForMail("lamnguyem5464@gmail.com");
-//        return res;
-//    }
-
-    @GetMapping(path = "/all")
+    @PostMapping(value = "/async")
     public @ResponseBody
-    Iterable<JavaObj> getAllUsers() {
+    CompletableFuture<Long> testAsync() {
+        long startTime = TimeUtils.getCurrentTimestamp();
+
         JavaObj obj = new JavaObj();
         obj.setName("Test 1");
 
-        userRepository.save(obj);
+        return CompletableFuture
+                .supplyAsync(() -> {
+                    userRepository.saveAsync(obj).join();
+                    return 0;   //dummy return value
+                })
+                .thenApply((ignoredVoid) -> {
 
-        return userRepository.findAll();
+                    System.out.println(TimeUtils.getCurrentTimestamp() - startTime + "ms");
+                    return userRepository.findAllAsync()
+                            .thenApply((res) -> Long.valueOf(res.size()));
+                })
+                .join();
+
+
+//        CompletableFuture
+//                .supplyAsync(() -> null)
+//                .thenApply((res) -> task1().join())
+//                .thenApply((res2) -> task2().join())
+//                .thenApply((res3) -> task1().join());
+
+
     }
 
-//    @PostMapping(path = "/create-opt")
-//    @ResponseBody
-//    public TestResponse createOTP(@RequestBody TestRequest req) {
-//        TestResponse res = new TestResponse();
-//        res.params1 =
-//                otpService.createForMail(req.params1).getDesc();
-//        return res;
-//    }
-//
-//    @PostMapping(path = "/verify-opt")
-//    @ResponseBody
-//    public TestResponse verifyOTP(@RequestBody TestRequest req) {
-//        TestResponse res = new TestResponse();
-//        res.params1 = otpService.verifyOtpForEmail(req.params1, req.params2).getDesc();
-//        return res;
-//    }
+    private CompletableFuture<Object> task1() {
+        return supplyAsync(new Supplier<Object>() {
+            @Override
+            public Long get() {
+                System.out.println("11111");
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    System.out.println("return 1");
+                    return Long.valueOf(111);
+                }
+            }
+        });
+    }
+
+    private CompletableFuture<Object> task2() {
+        return supplyAsync(() -> {
+            System.out.println("2222");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                System.out.println("return 2");
+                return Long.valueOf(222);
+            }
+        });
+    }
+
+    private Collection<JavaObj> computeVeryLong() {
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            return Arrays.asList(new JavaObj());
+        }
+
+//        Collection<JavaObj> list = userRepository.findAll();
+//        return list;
+    }
+
+    @Async
+    private CompletableFuture<Collection<JavaObj>> computeVeryLongAsync() {
+        return supplyAsync(new Supplier<Collection<JavaObj>>() {
+            @Override
+            public Collection<JavaObj> get() {
+                return computeVeryLong();
+            }
+        }, Executors.newCachedThreadPool());
+    }
+
+
 }
