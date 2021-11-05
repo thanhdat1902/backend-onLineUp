@@ -1,6 +1,7 @@
 package com.server.onlineup.service.database;
 
 import com.server.onlineup.common.constant.AuthenticationEnum;
+import com.server.onlineup.common.exception.APIException;
 import com.server.onlineup.common.response.BaseResponse;
 import com.server.onlineup.model.entity.ProfileEntity;
 import com.server.onlineup.repository.ProfileRepository;
@@ -117,9 +118,14 @@ public class ProfileService implements IUserService {
         Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         String email = ((UserDetails) user).getUsername();
-        Optional<ProfileEntity> UserFromEmail = profileService.findByUsername(email);
-        UserFromEmail.get().setFcm_token(fcm_token);
-        profileRepository.save(UserFromEmail.get());
+        try {
+            Optional<ProfileEntity> UserFromEmail = profileService.findByUsername(email);
+            UserFromEmail.get().setFcm_token(fcm_token);
+            profileRepository.save(UserFromEmail.get());
+        } catch (APIException e) {
+            e.printStackTrace();
+            throw e;
+        }
         return BaseResponse.Builder()
                 .addMessage(AuthenticationEnum.GET_FCM_TOKEN_SUCCESS)
                 .build();
