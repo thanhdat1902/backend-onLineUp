@@ -1,10 +1,16 @@
 package com.server.onlineup.service.database;
 
+import com.server.onlineup.common.constant.AuthenticationEnum;
+import com.server.onlineup.common.exception.APIException;
+import com.server.onlineup.common.response.BaseResponse;
 import com.server.onlineup.model.entity.ProfileEntity;
 import com.server.onlineup.repository.ProfileRepository;
 import com.server.onlineup.security.principal.UserPrincipal;
 import com.server.onlineup.service.implementation.IUserService;
+import com.server.onlineup.service.provider.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +25,12 @@ public class ProfileService implements IUserService {
     private ProfileRepository profileRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtService jwtService;
+
+    @Autowired
+    private ProfileService profileService;
 
     @Override
     public Iterable<ProfileEntity> findAll() {
@@ -100,5 +112,22 @@ public class ProfileService implements IUserService {
             return true;
         }
         return false;
+    }
+
+    public ResponseEntity handleUpdateFcmtoken(String fcm_token) {
+        Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String email = ((UserDetails) user).getUsername();
+        try {
+            Optional<ProfileEntity> UserFromEmail = profileService.findByUsername(email);
+            UserFromEmail.get().setFcm_token(fcm_token);
+            profileRepository.save(UserFromEmail.get());
+        } catch (APIException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return BaseResponse.Builder()
+                .addMessage(AuthenticationEnum.GET_FCM_TOKEN_SUCCESS)
+                .build();
     }
 }
