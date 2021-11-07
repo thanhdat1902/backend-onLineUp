@@ -17,6 +17,6 @@ public class UserController {
     @PostMapping("/update-fcm-token")
     @ResponseBody
     public ResponseEntity updateFcmToken(@RequestBody UpdateFcmtokenRequest request) {
-        return profileService.handleUpdateFcmtoken(request.fcm_token);
+        return profileService.handleUpdateFcmtoken(request.fcmToken);
     }
 }
