@@ -70,9 +70,9 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter {
                         "/sign-up/verify-otp",
                         "/sign-up/use-facebook",
                         "/sign-up/create-account",
-                        "/user-profile/verify-otp",
-                        "/user-profile/new-password",
-                        "/user-profile/confirm-email"
+                        "/user-profile/forget-password/verify-otp",
+                        "/user-profile/forget-password/new-password",
+                        "/user-profile/forget-password/confirm-email"
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable();
