@@ -64,8 +64,8 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter {
         http.httpBasic().authenticationEntryPoint(restServicesEntryPoint());
         http.authorizeRequests()
                 .antMatchers("/", "/login", "/login-facebook", "/sign-up/post-email", "/sign-up/verify-otp",
-                        "/sign-up/use-facebook", "/sign-up/create-account", "/forget-password/confirm-email",
-                        "/forget-password/verify-otp", "/forget-password/new-password").permitAll()
+                        "/sign-up/use-facebook", "/sign-up/create-account", "/user-profile/forget-password/confirm-email",
+                        "/user-profile/forget-password/verify-otp", "/user-profile/forget-password/new-password").permitAll()
 
                 .anyRequest().authenticated()
                 .and().csrf().disable();
