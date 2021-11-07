@@ -120,7 +120,7 @@ public class ProfileService implements IUserService {
         String email = ((UserDetails) user).getUsername();
         try {
             Optional<ProfileEntity> UserFromEmail = profileService.findByUsername(email);
-            UserFromEmail.get().setFcm_token(fcm_token);
+            UserFromEmail.get().setFcmToken(fcm_token);
             profileRepository.save(UserFromEmail.get());
         } catch (APIException e) {
             e.printStackTrace();
