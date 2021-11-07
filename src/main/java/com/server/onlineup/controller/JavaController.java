@@ -1,8 +1,14 @@
 package com.server.onlineup.controller;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.server.onlineup.common.utils.TimeUtils;
 import com.server.onlineup.model.entity.JavaObj;
+import com.server.onlineup.model.entity.ProfileEntity;
 import com.server.onlineup.repository.JavaRepository;
+import com.server.onlineup.repository.ProfileRepository;
+import com.server.onlineup.service.provider.notification.MessageNotification;
+import com.server.onlineup.service.provider.notification.NotificationService;
+import com.server.onlineup.service.provider.notification.OnMessagedNotification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
@@ -13,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -27,19 +34,51 @@ public class JavaController {
     @Autowired
     private JavaRepository userRepository;
 
+    @Autowired
+    ProfileRepository profileRepository;
+
+    @Autowired
+    private NotificationService noti;
+
     @PostMapping(value = "/sync")
     public @ResponseBody
     long test() {
-        JavaObj obj = new JavaObj();
-        obj.setName("Test 1");
-        long startTime = TimeUtils.getCurrentTimestamp();
-        userRepository.save(obj);
-
-        Long size = Long.valueOf(userRepository.findAll().size());
-
-        System.out.println(TimeUtils.getCurrentTimestamp() - startTime + "ms");
-        return size;
+//        JavaObj obj = new JavaObj();
+//        obj.setName("Test 1");
+//        long startTime = TimeUtils.getCurrentTimestamp();
+//        userRepository.save(obj);
+//
+//        Long size = Long.valueOf(userRepository.findAll().size());
+//
+//        System.out.println(TimeUtils.getCurrentTimestamp() - startTime + "ms");
+//        return size;
 //        return computeVeryLong();
+
+        Optional<ProfileEntity> profile = profileRepository.findByEmail("lamnguyen5464@gmail.com");
+
+        noti.sendAsync(MessageNotification
+                .Builder()
+                .setTitle("TTTTTitle")
+                .setBody("This is content aergaga ")
+                .setExtra("field 1", 1111)
+                .setExtra("field 2", "222")
+                .setTargetUserToken(profile.get().getFcm_token())
+                .build(), new OnMessagedNotification() {
+            @Override
+            public void onSuccess() {
+                System.out.println("sent succsess");
+            }
+
+            @Override
+            public void onFail(FirebaseMessagingException exception) {
+                System.out.println("sent fail" + exception.getMessage());
+            }
+        });
+
+        System.out.println("out here");
+
+        return 0;
+
     }
 
     @PostMapping(value = "/async")

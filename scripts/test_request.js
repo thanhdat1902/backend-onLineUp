@@ -15,10 +15,10 @@ const testCall = (url, tag) => {
     );
 };
 
-const MAX = 20;
+const MAX = 1;
 
     // const url = 'https://onlineup-server.herokuapp.com';
-const url = `curl --header "Content-Type: application/json" --request POST --data '{"email":"ntlam19@apcs.vnn"}' http://localhost:8080/test/async`;
+const url = `curl --header "Content-Type: application/json" --request POST --data '{"email":"ntlam19@apcs.vnn"}' http://localhost:8080/test/sync`;
 
 console.log(`start call ${url} ${MAX} times`)
 for (let i = 0; i < MAX; i++) {
