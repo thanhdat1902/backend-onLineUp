@@ -201,11 +201,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{URL-Local}}forget-password/confirm-email",
+									"raw": "{{URL-Local}}user-profile/forget-password/confirm-email",
 									"host": [
-										"{{URL-Local}}forget-password"
+										"{{URL-Local}}user-profile"
 									],
 									"path": [
+										"forget-password",
 										"confirm-email"
 									]
 								}
@@ -230,11 +231,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{URL-Local}}forget-password/verify-otp",
+									"raw": "{{URL-Local}}user-profile/forget-password/verify-otp",
 									"host": [
-										"{{URL-Local}}forget-password"
+										"{{URL-Local}}user-profile"
 									],
 									"path": [
+										"forget-password",
 										"verify-otp"
 									]
 								}
@@ -265,11 +267,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{URL-Local}}forget-password/new-password",
+									"raw": "{{URL-Local}}user-profile/forget-password/new-password",
 									"host": [
-										"{{URL-Local}}forget-password"
+										"{{URL-Local}}user-profile"
 									],
 									"path": [
+										"forget-password",
 										"new-password"
 									]
 								}
