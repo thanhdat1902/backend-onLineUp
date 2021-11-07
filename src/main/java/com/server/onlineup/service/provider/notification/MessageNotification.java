@@ -2,28 +2,24 @@ package com.server.onlineup.service.provider.notification;
 
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
+import net.minidev.json.JSONObject;
 
 public class MessageNotification {
     private String title;
     private String body;
+    private JSONObject extraData;
     private String targetUserToken;
-    private String refId;
-    private String cta;
 
     private MessageNotification() {
     }
 
     public static MessageNotification Builder() {
-        return new MessageNotification();
+        MessageNotification instance = new MessageNotification();
+        return instance;
     }
 
     public MessageNotification setTargetUserToken(String targetUserToken) {
         this.targetUserToken = targetUserToken;
-        return this;
-    }
-
-    public MessageNotification setTitle(String title) {
-        this.title = title;
         return this;
     }
 
@@ -32,13 +28,16 @@ public class MessageNotification {
         return this;
     }
 
-    public MessageNotification setRefId(String refId) {
-        this.refId = refId;
+    public MessageNotification setTitle(String title) {
+        this.title = title;
         return this;
     }
 
-    public MessageNotification setCta(String cta) {
-        this.cta = cta;
+    public MessageNotification setExtra(String field, Object value) {
+        if (this.extraData == null) {
+            this.extraData = new JSONObject();
+        }
+        this.extraData.appendField(field, value);
         return this;
     }
 
@@ -53,6 +52,8 @@ public class MessageNotification {
                 .builder()
                 .setToken(this.targetUserToken)
                 .setNotification(notification)
+                .putData(KeyNotification.extra, this.extraData.toJSONString())
+                .putData(KeyNotification.text, this.extraData.toJSONString())
                 .build();
     }
 }
