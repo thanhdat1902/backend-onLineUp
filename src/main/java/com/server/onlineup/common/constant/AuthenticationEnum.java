@@ -35,7 +35,12 @@ public enum AuthenticationEnum implements BaseEnum {
     CHANGE_PASS_SUCCESS("Change password successfully", "change_pass_success"),
 
     // Using Facebook
-    FAIL_FACEBOOK_SIGN_IN("Something wrong with your facebook", "fail_facebook_sign_in");
+    FAIL_FACEBOOK_SIGN_IN("Something wrong with your facebook", "fail_facebook_sign_in"),
+
+    // Update fcm_token
+    GET_FCM_TOKEN_SUCCESS("Update fcm_token success", "get_fcm_token_success"),
+    TOKEN_EMPTY_USER("Can not specify the user from jwt token", "token_empty_user");
+
 
     AuthenticationEnum(String desc, String descCode) {
         this.desc = desc;
