@@ -6,6 +6,6 @@ import com.server.onlineup.model.entity.RoomEntity;
 import java.util.Optional;
 
 public interface IRoomService extends IGeneralService<RoomEntity> {
-    Optional<RoomEntity> findById(int id);
+    Optional<RoomEntity> findById(String id);
 
 }

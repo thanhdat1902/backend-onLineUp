@@ -24,17 +24,17 @@ public class RoomAdminService implements IRoomAdminService {
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(String id) {
         roomAdminRepository.deleteById(id);
     }
 
     @Override
-    public List<RoomAdminEntity> findByProfileId(int id) {
+    public List<RoomAdminEntity> findByProfileId(String id) {
         return roomAdminRepository.findByIdProfile(id);
     }
 
     @Override
-    public List<RoomAdminEntity> findByRoomId(int id) {
+    public List<RoomAdminEntity> findByRoomId(String id) {
         return roomAdminRepository.findByIdRoom(id);
     }
 }

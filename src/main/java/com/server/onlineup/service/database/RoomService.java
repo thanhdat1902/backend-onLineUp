@@ -1,11 +1,9 @@
 package com.server.onlineup.service.database;
 
-import com.server.onlineup.model.entity.ProfileEntity;
 import com.server.onlineup.model.entity.RoomEntity;
 import com.server.onlineup.repository.RoomRepository;
 import com.server.onlineup.service.implementation.IRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,13 +12,14 @@ import java.util.Optional;
 public class RoomService implements IRoomService {
     @Autowired
     private RoomRepository roomRepository;
+
     @Override
     public Iterable<RoomEntity> findAll() {
         return roomRepository.findAll();
     }
 
     @Override
-    public Optional<RoomEntity> findById(int id) {
+    public Optional<RoomEntity> findById(String id) {
         return roomRepository.findById(id);
     }
 
@@ -30,7 +29,7 @@ public class RoomService implements IRoomService {
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(String id) {
         roomRepository.deleteById(id);
     }
 }

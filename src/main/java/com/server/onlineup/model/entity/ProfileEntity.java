@@ -5,16 +5,24 @@ import com.server.onlineup.common.utils.NumberUtils;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "Profile")
 public class ProfileEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private String id = UUID.randomUUID().toString();
 
     @Column(unique = true, nullable = false)
     private String email;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @Column(nullable = false)
     private String password;
@@ -28,11 +36,11 @@ public class ProfileEntity {
     @Column
     private String fcmToken;
 
-    @OneToMany(mappedBy = "profileEntity",cascade = CascadeType.ALL,
+    @OneToMany(mappedBy = "profileEntity", cascade = CascadeType.ALL,
             orphanRemoval = true)
     Set<RoomUserEntity> roomAsUser = new HashSet<RoomUserEntity>();
 
-    @OneToMany(mappedBy = "profileEntity",cascade = CascadeType.ALL,
+    @OneToMany(mappedBy = "profileEntity", cascade = CascadeType.ALL,
             orphanRemoval = true)
     Set<RoomAdminEntity> roomAsAdmin = new HashSet<RoomAdminEntity>();
 
@@ -57,23 +65,20 @@ public class ProfileEntity {
         this.fullName = fullName;
     }
 
-
-
-
-
     public void addAdminRoom(RoomEntity room) {
         RoomAdminEntity roomAdminEntity = new RoomAdminEntity(this, room);
         roomAsAdmin.add(roomAdminEntity);
     }
+
     public void addUserRoom(RoomEntity room) {
         RoomUserEntity roomUserEntity = new RoomUserEntity(this, room);
         roomAsUser.add(roomUserEntity);
     }
 
 
-
     // Getter & Setter
-    public ProfileEntity() {}
+    public ProfileEntity() {
+    }
 
     public ProfileEntity(String email, String id) {
         this.email = email;
@@ -88,14 +93,6 @@ public class ProfileEntity {
         this.password = password;
         this.fullName = fullName;
         this.roles = "USER";
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     private String roles;
