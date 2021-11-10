@@ -1,2 +1,36 @@
-package com.server.onlineup.service.database;public class RoomService {
+package com.server.onlineup.service.database;
+
+import com.server.onlineup.model.entity.ProfileEntity;
+import com.server.onlineup.model.entity.RoomEntity;
+import com.server.onlineup.repository.RoomRepository;
+import com.server.onlineup.service.implementation.IRoomService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+public class RoomService implements IRoomService {
+    @Autowired
+    private RoomRepository roomRepository;
+    @Override
+    public Iterable<RoomEntity> findAll() {
+        return roomRepository.findAll();
+    }
+
+    @Override
+    public Optional<RoomEntity> findById(int id) {
+        return roomRepository.findById(id);
+    }
+
+    @Override
+    public RoomEntity save(RoomEntity room) {
+        return roomRepository.save(room);
+    }
+
+    @Override
+    public void remove(int id) {
+        roomRepository.deleteById(id);
+    }
 }
