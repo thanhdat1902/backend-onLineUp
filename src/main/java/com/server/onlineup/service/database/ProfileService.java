@@ -38,7 +38,7 @@ public class ProfileService implements IUserService {
     }
 
     @Override
-    public Optional<ProfileEntity> findById(int id) {
+    public Optional<ProfileEntity> findById(String id) {
         return profileRepository.findById(id);
     }
 
@@ -49,7 +49,7 @@ public class ProfileService implements IUserService {
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(String id) {
         profileRepository.deleteById(id);
     }
 
