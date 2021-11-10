@@ -3,6 +3,8 @@ package com.server.onlineup.model.entity;
 import com.server.onlineup.common.utils.NumberUtils;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Profile")
@@ -26,6 +28,14 @@ public class ProfileEntity {
     @Column
     private String fcmToken;
 
+    @OneToMany(mappedBy = "profileEntity",cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    Set<RoomUserEntity> roomAsUser = new HashSet<RoomUserEntity>();
+
+    @OneToMany(mappedBy = "profileEntity",cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    Set<RoomAdminEntity> roomAsAdmin = new HashSet<RoomAdminEntity>();
+
     public String getFb_id() {
         return idFacebook;
     }
@@ -47,8 +57,23 @@ public class ProfileEntity {
         this.fullName = fullName;
     }
 
-    public ProfileEntity() {
+
+
+
+
+    public void addAdminRoom(RoomEntity room) {
+        RoomAdminEntity roomAdminEntity = new RoomAdminEntity(this, room);
+        roomAsAdmin.add(roomAdminEntity);
     }
+    public void addUserRoom(RoomEntity room) {
+        RoomUserEntity roomUserEntity = new RoomUserEntity(this, room);
+        roomAsUser.add(roomUserEntity);
+    }
+
+
+
+    // Getter & Setter
+    public ProfileEntity() {}
 
     public ProfileEntity(String email, String id) {
         this.email = email;
