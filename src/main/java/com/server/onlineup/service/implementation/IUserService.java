@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface IUserService extends IGeneralService<ProfileEntity>, UserDetailsService {
     Optional<ProfileEntity> findByUsername(String username);
+
+    Optional<ProfileEntity> findById(int id);
 }
