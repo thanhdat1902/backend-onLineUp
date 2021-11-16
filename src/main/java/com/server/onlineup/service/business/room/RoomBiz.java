@@ -6,6 +6,7 @@ import com.server.onlineup.common.exception.APIException;
 import com.server.onlineup.common.response.BaseResponse;
 import com.server.onlineup.model.entity.ProfileEntity;
 import com.server.onlineup.model.entity.RoomEntity;
+import com.server.onlineup.model.request.RoomRequest;
 import com.server.onlineup.service.database.ProfileService;
 import com.server.onlineup.service.database.RoomAdminService;
 import com.server.onlineup.service.database.RoomService;
@@ -40,6 +41,7 @@ public class RoomBiz {
         // Add current user to admin
         room.addHost(currentUser.get());
 
+
         // Create room entity
         roomService.save(room);
 
@@ -48,14 +50,19 @@ public class RoomBiz {
                 .addMessage(RoomEnum.CREATE_SUCCESS)
                 .build();
     }
-    public ResponseEntity handleJoinRoom(UserDetails user, RoomEntity room) {
+    public ResponseEntity handleJoinRoom(UserDetails user, RoomRequest room) {
+        Optional<ProfileEntity> currentUser = profileService.findByUsername(user.getUsername());
 
+        roomService.findById(room.getId());
 
         return BaseResponse.Builder()
                 .addMessage(RoomEnum.JOIN_SUCCESS)
                 .build();
     }
-    public ResponseEntity handleAddCoHost(UserDetails user, String roomId) {
+    public ResponseEntity handleAddCoHost(UserDetails user, RoomRequest room) {
+
+
+
         return BaseResponse.Builder()
                 .addMessage(RoomEnum.JOIN_SUCCESS)
                 .build();
