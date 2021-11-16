@@ -35,6 +35,10 @@ public class RoomEntity {
 
     private String address;
 
+    private String theme;
+
+    private String name;
+
     private int timeZoneOffset;
 
     public void addUser(ProfileEntity user) {

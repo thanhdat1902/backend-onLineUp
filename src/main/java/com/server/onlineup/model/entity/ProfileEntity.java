@@ -3,13 +3,13 @@ package com.server.onlineup.model.entity;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "Profile")
 public class ProfileEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private String id = UUID.randomUUID().toString();
 
     @Column(unique = true, nullable = false)
     private String email;
@@ -88,11 +88,11 @@ public class ProfileEntity {
         this.roles = "USER";
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
