@@ -52,11 +52,11 @@ public class ProfileEntity {
         this.idFacebook = fb_id;
     }
 
-    public String getFcm_token() {
+    public String getFcmToken() {
         return fcmToken;
     }
 
-    public void setFcm_token(String fcm_token) {
+    public void setFcmToken(String fcm_token) {
         this.fcmToken = fcm_token;
     }
 

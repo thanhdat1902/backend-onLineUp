@@ -1,6 +1,5 @@
 package com.server.onlineup.controller;
 
-import com.google.firebase.messaging.FirebaseMessagingException;
 import com.server.onlineup.common.utils.TimeUtils;
 import com.server.onlineup.model.entity.JavaObj;
 import com.server.onlineup.model.entity.ProfileEntity;
@@ -8,7 +7,6 @@ import com.server.onlineup.repository.JavaRepository;
 import com.server.onlineup.repository.ProfileRepository;
 import com.server.onlineup.service.provider.notification.MessageNotification;
 import com.server.onlineup.service.provider.notification.NotificationService;
-import com.server.onlineup.service.provider.notification.OnMessagedNotification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
@@ -56,23 +54,16 @@ public class JavaController {
 
         Optional<ProfileEntity> profile = profileRepository.findByEmail("lamnguyen5464@gmail.com");
 
-        noti.sendAsync(MessageNotification
+        noti.saveAndSendAsync(MessageNotification
                 .Builder()
                 .setTitle("TTTTTitle")
-                .setBody("This is content aergaga ")
+                .setBody("This is content aergaga " + TimeUtils.getCurrentTimestamp())
                 .setExtra("field 1", 1111)
                 .setExtra("field 2", "222")
-                .setTargetUserToken(profile.get().getFcm_token())
-                .build(), new OnMessagedNotification() {
-            @Override
-            public void onSuccess() {
-                System.out.println("sent succsess");
-            }
-
-            @Override
-            public void onFail(FirebaseMessagingException exception) {
-                System.out.println("sent fail" + exception.getMessage());
-            }
+                .setTargetUserToken(profile.get())
+        ).thenCompose((res) -> {
+            System.out.println(("done!!"));
+            return null;
         });
 
         System.out.println("out here");
@@ -101,7 +92,6 @@ public class JavaController {
                             .thenApply((res) -> Long.valueOf(res.size()));
                 })
                 .join();
-
 
 //        CompletableFuture
 //                .supplyAsync(() -> null)

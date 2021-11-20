@@ -5,18 +5,16 @@ import com.server.onlineup.common.utils.TimeUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class BaseResponse<T> {
+public class BaseResponse {
     public String descriptionCode;
     public String description;
     private HttpStatus errorStatus = null;
     public long created_time;
-    public T data;
+    public Object data;
 
-
-    public static <TT> BaseResponse Builder() {
-        return new BaseResponse<TT>();
+    public static BaseResponse Builder() {
+        return new BaseResponse();
     }
-
 
     public BaseResponse addMessage(BaseEnum messageEnum) {
         this.description = messageEnum.getDesc();
@@ -24,7 +22,7 @@ public class BaseResponse<T> {
         return this;
     }
 
-    public BaseResponse addData(T data) {
+    public BaseResponse addData(Object data) {
         this.data = data;
         return this;
     }
