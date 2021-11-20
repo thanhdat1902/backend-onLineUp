@@ -3,10 +3,7 @@ package com.server.onlineup.model.entity;
 import com.server.onlineup.common.utils.TimeUtils;
 import com.server.onlineup.service.provider.notification.MessageNotification;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
@@ -15,8 +12,9 @@ public class NotificationEntity {
     @Id
     public String id;
 
-    @Column(nullable = false)
-    public String user; //email
+    @ManyToOne
+    @JoinColumn(name = "user_email", referencedColumnName = "email", insertable = false, updatable = false)
+    public ProfileEntity user; //email
     public String title;
     public String body;
     public long created_time;
@@ -32,7 +30,7 @@ public class NotificationEntity {
         this.extra = notification.getStringExtra();
 
         if (notification.getTargetUser() != null) {
-            this.user = notification.getTargetUser().getEmail();
+            this.user = notification.getTargetUser();
         }
     }
 }
