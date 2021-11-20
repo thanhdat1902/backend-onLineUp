@@ -14,7 +14,7 @@ public class UserPrincipal implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    private int id;
+    private String id;
 
     private String email;
 
@@ -23,7 +23,7 @@ public class UserPrincipal implements UserDetails {
     private Set<GrantedAuthority> authorities = new HashSet<>();
 
 
-    public UserPrincipal(int id, String email, String password) {
+    public UserPrincipal(String id, String email, String password) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -41,7 +41,7 @@ public class UserPrincipal implements UserDetails {
         );
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
