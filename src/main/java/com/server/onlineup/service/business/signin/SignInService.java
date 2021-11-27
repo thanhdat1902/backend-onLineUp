@@ -7,6 +7,7 @@ import com.server.onlineup.model.entity.ProfileEntity;
 import com.server.onlineup.model.response.EmailVerificationReponse;
 import com.server.onlineup.model.response.JwtResponse;
 import com.server.onlineup.model.response.LoginResponse;
+import com.server.onlineup.model.response.ProfileResponse;
 import com.server.onlineup.service.database.ProfileService;
 import com.server.onlineup.service.implementation.IUserService;
 import com.server.onlineup.service.provider.jwt.JwtService;
@@ -47,7 +48,7 @@ public class SignInService {
         return BaseResponse.Builder()
                 .addMessage(AuthenticationEnum.LOGIN_SUCCESS)
                 //Edit from jwtResponse to get more information of user.
-                .addData(new LoginResponse(currentUser, jwtResponse))
+                .addData(new LoginResponse(new ProfileResponse(currentUser), jwtResponse))
                 .build();
     }
 
@@ -65,7 +66,7 @@ public class SignInService {
         ProfileEntity user = profileService.findByUsername(res.email).get();
         return BaseResponse.Builder()
                 .addMessage(AuthenticationEnum.LOGIN_SUCCESS)
-                .addData(new LoginResponse(user, jwtResponse))
+                .addData(new LoginResponse(new ProfileResponse(user), jwtResponse))
                 .build();
     }
 

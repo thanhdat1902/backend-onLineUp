@@ -7,6 +7,7 @@ import com.server.onlineup.model.entity.ProfileEntity;
 import com.server.onlineup.model.response.EmailVerificationReponse;
 import com.server.onlineup.model.response.JwtResponse;
 import com.server.onlineup.model.response.LoginResponse;
+import com.server.onlineup.model.response.ProfileResponse;
 import com.server.onlineup.service.database.ProfileService;
 import com.server.onlineup.service.provider.jwt.JwtService;
 import com.server.onlineup.service.provider.rest.RestService;
@@ -73,8 +74,7 @@ public class SignUpService {
         JwtResponse jwtResponse = new JwtResponse(jwt);
         ProfileEntity user = profileService.findByUsername(email).get();
 
-
-        LoginResponse loginResponse = new LoginResponse(user, jwtResponse);
+        LoginResponse loginResponse = new LoginResponse(new ProfileResponse(user), jwtResponse);
         System.out.println(loginResponse);
         return BaseResponse.Builder()
                 .addMessage(AuthenticationEnum.CREATE_ACCOUNT_SUCCESS)
