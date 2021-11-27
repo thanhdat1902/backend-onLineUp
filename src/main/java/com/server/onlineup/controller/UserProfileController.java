@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @CrossOrigin
-@RequestMapping("/forget-password")
+@RequestMapping("/user-profile")
 public class UserProfileController {
 
     @Autowired
@@ -20,19 +20,19 @@ public class UserProfileController {
     @Autowired
     ProfileService profileService;
 
-    @PostMapping("/confirm-email")
+    @PostMapping("/forget-password/confirm-email")
     @ResponseBody
     public ResponseEntity postForgetPasswordEmail(@RequestBody ForgetPasswordEmailRequest request) {
         return changePasswordService.handleEmailForgetPassword(request.email);
     }
 
-    @PostMapping("/verify-otp")
+    @PostMapping("/forget-password/verify-otp")
     @ResponseBody
     public ResponseEntity checkOTPForgetPassword(@RequestBody ForgetPasswordConfirmRequest request) {
         return changePasswordService.handleVerifyOTPForgetPassword(request.email, request.otp);
     }
 
-    @PostMapping("/new-password")
+    @PostMapping("/forget-password/new-password")
     @ResponseBody
     public ResponseEntity updateNewPassword(@RequestBody UpdatePasswordRequest request) {
         return changePasswordService.updatePasswordForget(request.email, request.newPass, request.confirmNewPass);

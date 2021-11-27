@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class RoomUserService implements IRoomUserService {
     @Autowired
@@ -23,17 +24,17 @@ public class RoomUserService implements IRoomUserService {
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(String id) {
         roomUserRepository.deleteById(id);
     }
 
     @Override
-    public List<RoomUserEntity> findByProfileId(int id) {
+    public List<RoomUserEntity> findByProfileId(String id) {
         return roomUserRepository.findByIdProfile(id);
     }
 
     @Override
-    public List<RoomUserEntity> findByRoomId(int id) {
+    public List<RoomUserEntity> findByRoomId(String id) {
         return roomUserRepository.findByIdRoom(id);
     }
 }
