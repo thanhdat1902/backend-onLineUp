@@ -22,10 +22,15 @@ public class RoomController {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return roomBizService.handleCreateRoom(user, room);
     }
-    @GetMapping("/list")
-    public ResponseEntity getListRooms() {
+    @GetMapping("/room-user")
+    public ResponseEntity getListRoomsAsUser() {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return roomBizService.getListRooms(user);
+            return roomBizService.getListRoomsAsUser(user);
+    }
+    @GetMapping("/room-admin")
+    public ResponseEntity getListRoomsAsAdmin() {
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return roomBizService.getListRoomsAsAdmin(user);
     }
     @PostMapping("/add-user")
     public ResponseEntity addUser(@RequestBody JoinRoomRequest joinRoomRequest) {

@@ -53,44 +53,6 @@ public class RoomBiz {
                 .addMessage(RoomEnum.CREATE_SUCCESS)
                 .build();
     }
-    public boolean isUserInRoom(RoomEntity room, String userId){
-        for(RoomUserEntity user : room.getUserList()){
-            if (user.getProfileId().equals(userId)){
-                return true;
-            }
-        }
-        for(RoomAdminEntity user : room.getAdminList()){
-            if (user.getProfileId().equals(userId)){
-                return true;
-            }
-        }
-        return false;
-    }
-    public boolean isUserAsAdmin(RoomEntity room, String userId){
-        for(RoomAdminEntity user : room.getAdminList()){
-            if (user.getProfileId().equals(userId)){
-                return true;
-            }
-        }
-        return false;
-    }
-    public boolean isHostInRoom(RoomEntity room, String adminId){
-        for(RoomAdminEntity user : room.getAdminList()){
-            if (user.getProfileId().equals(adminId) && (user.getRole()== RoleEnum.HOST)){
-                return true;
-            }
-        }
-        return false;
-    }
-    public boolean isAdminInRoom(RoomEntity room, String adminId){
-        for(RoomAdminEntity user : room.getAdminList()){
-            if (user.getProfileId().equals(adminId)){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public ResponseEntity handleJoinRoom(UserDetails admin, JoinRoomRequest joinRoomRequest) {
         Optional<ProfileEntity> currentUser = profileService.findByUsername(admin.getUsername());
 
@@ -116,7 +78,6 @@ public class RoomBiz {
                 .addMessage(RoomEnum.JOIN_SUCCESS)
                 .build();
     }
-
     public ResponseEntity handleAddCoHost(UserDetails host, JoinRoomRequest joinRoomRequest) {
         Optional<ProfileEntity> currentUser = profileService.findByUsername(host.getUsername());
 
@@ -184,14 +145,12 @@ public class RoomBiz {
                 .addMessage(RoomEnum.UPDATE_HOST_SUCCESS)
                 .build();
     }
-    public ResponseEntity getListRooms(UserDetails user) {
+    public ResponseEntity getListRoomsAsUser(UserDetails user) {
         Optional<ProfileEntity> currentUser = profileService.findByUsername(user.getUsername());
         if(!currentUser.isPresent()) {
             throw new APIException(BaseResponse.Builder().addMessage(RoomEnum.USER_NOT_EXIST));
         }
         Set<String> roomUserId = currentUser.get().getRoomAsUser().stream().map(u -> u.getRoomId()).collect(Collectors.toSet());
-        Set<String> roomAdminId = currentUser.get().getRoomAsAdmin().stream().map(u -> u.getRoomId()).collect(Collectors.toSet());
-        roomUserId.addAll(roomAdminId);
         Set<RoomEntity> roomList = roomService.findByInventoryIds(roomUserId);
         Set<RoomResponse> roomListResponse = new HashSet<>();
         for (RoomEntity room : roomList) {
@@ -201,5 +160,60 @@ public class RoomBiz {
                 .addData(roomListResponse)
                 .addMessage(RoomEnum.JOIN_SUCCESS)
                 .build();
+    }
+    public ResponseEntity getListRoomsAsAdmin(UserDetails user) {
+        Optional<ProfileEntity> currentUser = profileService.findByUsername(user.getUsername());
+        if(!currentUser.isPresent()) {
+            throw new APIException(BaseResponse.Builder().addMessage(RoomEnum.USER_NOT_EXIST));
+        }
+        Set<String> roomAdminId = currentUser.get().getRoomAsAdmin().stream().map(u -> u.getRoomId()).collect(Collectors.toSet());
+        Set<RoomEntity> roomList = roomService.findByInventoryIds(roomAdminId);
+        Set<RoomResponse> roomListResponse = new HashSet<>();
+        for (RoomEntity room : roomList) {
+            roomListResponse.add(new RoomResponse(room));
+        }
+        return BaseResponse.Builder()
+                .addData(roomListResponse)
+                .addMessage(RoomEnum.JOIN_SUCCESS)
+                .build();
+    }
+
+    // Helper
+    public boolean isUserInRoom(RoomEntity room, String userId){
+        for(RoomUserEntity user : room.getUserList()){
+            if (user.getProfileId().equals(userId)){
+                return true;
+            }
+        }
+        for(RoomAdminEntity user : room.getAdminList()){
+            if (user.getProfileId().equals(userId)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean isUserAsAdmin(RoomEntity room, String userId){
+        for(RoomAdminEntity user : room.getAdminList()){
+            if (user.getProfileId().equals(userId)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean isHostInRoom(RoomEntity room, String adminId){
+        for(RoomAdminEntity user : room.getAdminList()){
+            if (user.getProfileId().equals(adminId) && (user.getRole()== RoleEnum.HOST)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean isAdminInRoom(RoomEntity room, String adminId){
+        for(RoomAdminEntity user : room.getAdminList()){
+            if (user.getProfileId().equals(adminId)){
+                return true;
+            }
+        }
+        return false;
     }
 }
