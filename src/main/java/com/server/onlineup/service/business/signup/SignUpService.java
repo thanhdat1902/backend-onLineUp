@@ -75,7 +75,6 @@ public class SignUpService {
         ProfileEntity user = profileService.findByUsername(email).get();
 
         LoginResponse loginResponse = new LoginResponse(new ProfileResponse(user), jwtResponse);
-        System.out.println(loginResponse);
         return BaseResponse.Builder()
                 .addMessage(AuthenticationEnum.CREATE_ACCOUNT_SUCCESS)
                 .addData(loginResponse)
