@@ -158,7 +158,7 @@ public class RoomBiz {
         }
         return BaseResponse.Builder()
                 .addData(roomListResponse)
-                .addMessage(RoomEnum.JOIN_SUCCESS)
+                .addMessage(RoomEnum.GET_SUCCESS)
                 .build();
     }
     public ResponseEntity getListRoomsAsAdmin(UserDetails user) {
@@ -174,7 +174,7 @@ public class RoomBiz {
         }
         return BaseResponse.Builder()
                 .addData(roomListResponse)
-                .addMessage(RoomEnum.JOIN_SUCCESS)
+                .addMessage(RoomEnum.GET_SUCCESS)
                 .build();
     }
 
