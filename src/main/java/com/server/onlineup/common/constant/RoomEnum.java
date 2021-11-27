@@ -2,6 +2,7 @@ package com.server.onlineup.common.constant;
 
 public enum  RoomEnum implements BaseEnum {
     // Success enum
+    GET_SUCCESS("Get list successfully", "get_success"),
     CREATE_SUCCESS("Create room successfully", "create_success"),
     JOIN_SUCCESS("Join room successfully", "join_success"),
     UPDATE_SUCCESS("Update room successfully","update_success"),

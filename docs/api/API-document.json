@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "6cd4e582-a1b0-4b7c-9e0a-0a4355706e4d",
-		"name": "onLineUp API Copy",
+		"name": "onLineUp API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -139,7 +139,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"xmonkeydlufx@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+									"raw": "{\r\n    \"email\": \"edricnguyen192@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -398,13 +398,41 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/room/list",
+							"raw": "{{host}}/room/room-user",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"room",
-								"list"
+								"room-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{host}}/room/room-admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token\n}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/room/room-admin",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"room",
+								"room-admin"
 							]
 						}
 					},
@@ -528,10 +556,6 @@
 		{
 			"key": "URL-Local",
 			"value": "http://localhost:8080/"
-		},
-		{
-			"key": "URL-Heroku",
-			"value": "https://onlineup-server.herokuapp.com/"
 		}
 	]
 }
