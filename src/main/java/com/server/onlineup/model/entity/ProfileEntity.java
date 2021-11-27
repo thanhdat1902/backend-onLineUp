@@ -1,5 +1,7 @@
 package com.server.onlineup.model.entity;
 
+import com.server.onlineup.common.utils.NumberUtils;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +16,14 @@ public class ProfileEntity {
     @Column(unique = true, nullable = false)
     private String email;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Column(nullable = false)
     private String password;
 
@@ -21,33 +31,41 @@ public class ProfileEntity {
     private String fullName;
 
     @Column
-    private String fb_id;
+    private String idFacebook;
 
     @Column
-    private String fcm_token;
+    private String fcmToken;
 
-    @OneToMany(mappedBy = "profileEntity",cascade = CascadeType.ALL,
+    @OneToMany(mappedBy = "profileEntity", cascade = CascadeType.ALL,
             orphanRemoval = true)
     Set<RoomUserEntity> roomAsUser = new HashSet<RoomUserEntity>();
 
-    @OneToMany(mappedBy = "profileEntity",cascade = CascadeType.ALL,
+    public Set<RoomUserEntity> getRoomAsUser() {
+        return roomAsUser;
+    }
+
+    public Set<RoomAdminEntity> getRoomAsAdmin() {
+        return roomAsAdmin;
+    }
+
+    @OneToMany(mappedBy = "profileEntity", cascade = CascadeType.ALL,
             orphanRemoval = true)
     Set<RoomAdminEntity> roomAsAdmin = new HashSet<RoomAdminEntity>();
 
     public String getFb_id() {
-        return fb_id;
+        return idFacebook;
     }
 
     public void setFb_id(String fb_id) {
-        this.fb_id = fb_id;
+        this.idFacebook = fb_id;
     }
 
     public String getFcm_token() {
-        return fcm_token;
+        return fcmToken;
     }
 
     public void setFcm_token(String fcm_token) {
-        this.fcm_token = fcm_token;
+        this.fcmToken = fcm_token;
     }
 
 
@@ -55,28 +73,25 @@ public class ProfileEntity {
         this.fullName = fullName;
     }
 
-
-
-
-
     public void addAdminRoom(RoomEntity room) {
         RoomAdminEntity roomAdminEntity = new RoomAdminEntity(this, room);
         roomAsAdmin.add(roomAdminEntity);
     }
+
     public void addUserRoom(RoomEntity room) {
         RoomUserEntity roomUserEntity = new RoomUserEntity(this, room);
         roomAsUser.add(roomUserEntity);
     }
 
 
-
     // Getter & Setter
-    public ProfileEntity() {}
+    public ProfileEntity() {
+    }
 
     public ProfileEntity(String email, String id) {
         this.email = email;
-        this.fb_id = id;
-        this.password = "TmPpAsS";
+        this.idFacebook = id;
+        this.password = NumberUtils.generateRandomString((int) (Math.floor(Math.random())));
         this.fullName = "Unknown";
         this.roles = "USER";
     }
@@ -86,14 +101,6 @@ public class ProfileEntity {
         this.password = password;
         this.fullName = fullName;
         this.roles = "USER";
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     private String roles;

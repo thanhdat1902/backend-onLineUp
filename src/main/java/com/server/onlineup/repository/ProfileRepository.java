@@ -9,7 +9,7 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, String> 
 
     Optional<ProfileEntity> findByEmail(String email);
 
-    void deleteById(int id);
+    void deleteById(String id);
 
-    Optional<ProfileEntity> findById(int id);
+    Optional<ProfileEntity> findById(String id);
 }
