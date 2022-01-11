@@ -130,4 +130,5 @@ public class ProfileService implements IUserService {
                 .addMessage(AuthenticationEnum.GET_FCM_TOKEN_SUCCESS)
                 .build();
     }
+
 }

@@ -10,16 +10,21 @@ import java.util.Objects;
 @Table(name = "RoomAdmin")
 public class RoomAdminEntity {
     // This line help the json return have id of admin
-    public String getId() {return id.getProfile();}
-    public String getProfileId() {
+    public String getId() {
         return id.getProfile();
     }
+
+    //    public String getProfileId() {
+//        return id.getProfile();
+//    }
     public String getRoomId() {
         return id.getRoom();
     }
+
     public RoleEnum getRole() {
         return role;
     }
+
     public long getJoinTime() {
         return joinTime;
     }
@@ -29,12 +34,12 @@ public class RoomAdminEntity {
 
     @ManyToOne
     @MapsId("profile")
-    @JoinColumn(name = "profile_id",insertable=false,updatable=false)
+    @JoinColumn(name = "profile_id", insertable = false, updatable = false)
     ProfileEntity profileEntity;
 
     @ManyToOne
     @MapsId("room")
-    @JoinColumn(name = "room_id", insertable=false,updatable=false)
+    @JoinColumn(name = "room_id", insertable = false, updatable = false)
     RoomEntity roomEntity;
 
     @Enumerated(EnumType.STRING)
@@ -44,7 +49,9 @@ public class RoomAdminEntity {
         this.role = role;
     }
 
-    public RoomAdminEntity() {}
+    public RoomAdminEntity() {
+    }
+
     public RoomAdminEntity(ProfileEntity profileEntity, RoomEntity room) {
         this.roomEntity = room;
         this.profileEntity = profileEntity;
@@ -67,7 +74,8 @@ public class RoomAdminEntity {
     public int hashCode() {
         return Objects.hash(profileEntity, roomEntity);
     }
-    private long joinTime= TimeUtils.getCurrentTimestamp();
+
+    private long joinTime = TimeUtils.getCurrentTimestamp();
 
 }
 
