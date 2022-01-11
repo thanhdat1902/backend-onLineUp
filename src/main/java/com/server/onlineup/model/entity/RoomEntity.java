@@ -61,6 +61,50 @@ public class RoomEntity {
             name = hostName + "'s meeting room";
     }
 
+    public void setProcessUnit(long processUnit) {
+        this.processUnit = processUnit;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMaxQueuer(int maxQueuer) {
+        this.maxQueuer = maxQueuer;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setUserList(Set<RoomUserEntity> userList) {
+        this.userList = userList;
+    }
+
+    public void setAdminList(Set<RoomAdminEntity> adminList) {
+        this.adminList = adminList;
+    }
+
+    public void setStartDate(long startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(long endDate) {
+        this.endDate = endDate;
+    }
+
     public void addUser(ProfileEntity user) {
         RoomUserEntity roomUserEntity = new RoomUserEntity(user, this);
         userList.add(roomUserEntity);
@@ -89,7 +133,7 @@ public class RoomEntity {
 
     public void removeCoHost(String coHostId) {
         for (RoomAdminEntity admin : adminList) {
-            if (coHostId.equals(admin.getProfileId())) {
+            if (coHostId.equals(admin.getId())) {
                 adminList.remove(admin);
                 return;
             }
