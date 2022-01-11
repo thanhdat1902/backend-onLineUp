@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "6cd4e582-a1b0-4b7c-9e0a-0a4355706e4d",
+		"_postman_id": "715aaf0a-8f98-48b2-bf7b-18d53ee5f4cc",
 		"name": "onLineUp API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "sign in flow",
+			"name": "Sign In Flow",
 			"item": [
 				{
 					"name": "Sign Up",
@@ -362,7 +362,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"address\":\"HCMUS - 224 Nguyen Van Cu\",\r\n    \"processUnit\": 15,\r\n    \"startDate\":\"1638064563\",\r\n    \"endDate\": \"1638071763\"\r\n}",
+							"raw": "{\r\n    \"address\":\"HCMUS - 224 Nguyen Van Cuu\",\r\n    \"processUnit\": 15,\r\n    \"startDate\":\"1638064563\",\r\n    \"endDate\": \"1638071763\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -384,19 +384,31 @@
 				},
 				{
 					"name": "{{host}}/room/list",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{token\n}}",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
 						},
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{host}}/room/room-user",
 							"host": [
@@ -412,19 +424,26 @@
 				},
 				{
 					"name": "{{host}}/room/room-admin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{token\n}}",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
 						},
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{host}}/room/room-admin",
 							"host": [
@@ -446,7 +465,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{token\n}}",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -455,7 +474,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userEmail\":\"quanghuybui93@gmail.com\",\r\n    \"roomId\":\"9eb20e6c-642a-4853-94a0-75921681788c\"\r\n}",
+							"raw": "{\r\n    \"userEmail\":\"quanghuybui93@gmail.com\",\r\n    \"roomId\":\"761b62b5-67bd-4d16-baae-2df8312266ae\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -476,14 +495,14 @@
 					"response": []
 				},
 				{
-					"name": "{{host}}/add-co-host",
+					"name": "{{host}}/room/add-co-host",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{token\n}}",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -492,7 +511,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userEmail\":\"quanghuybui93@gmail.com\",\r\n    \"roomId\":\"9eb20e6c-642a-4853-94a0-75921681788c\"\r\n}",
+							"raw": "{\r\n    \"userEmail\":\"quanghuybui93@gmail.com\",\r\n    \"roomId\":\"761b62b5-67bd-4d16-baae-2df8312266ae\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -520,7 +539,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{token\n}}",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -529,7 +548,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userEmail\":\"edricnguyen192@gmail.com\",\r\n    \"roomId\":\"9eb20e6c-642a-4853-94a0-75921681788c\"\r\n}",
+							"raw": "{\r\n    \"userEmail\":\"edricnguyen192@gmail.com\",\r\n    \"roomId\":\"384c77df-f3db-4fe4-87c0-715f8d863959\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -548,14 +567,155 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "{{host}}/room/search-room",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"roomName\": \"Nguyen\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/room/search-room",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"room",
+								"search-room"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{host}}/room/update-status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"processUnit\": 15,\r\n    \"address\": \"HCMUS - 69 Nguyen Van Cuuuuuu\",\r\n    \"theme\": \"#5e9ac4\",\r\n    \"name\": \"Special Room\",\r\n    \"maxQueuer\": 100,\r\n    \"hostName\": \"Dat Nguyen\",\r\n    \"status\": true,\r\n    \"id\": \"761b62b5-67bd-4d16-baae-2df8312266ae\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/room/update-status",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"room",
+								"update-status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{host}}/room/detail",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"roomID\": \"761b62b5-67bd-4d16-baae-2df8312266ae\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/room/detail",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"room",
+								"detail"
+							]
+						}
+					},
+					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
 		{
 			"key": "URL-Local",
 			"value": "http://localhost:8080/"
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlZHJpY25ndXllbjE5MkBnbWFpbC5jb20iLCJpYXQiOjE2NDE5MTYzNzEsImV4cCI6MTY0MTkxOTk3MX0.c5c24s9DffABNkNKgs1IqmHYNakl6C5BDxQSwkvcBhw",
+			"type": "string"
+		},
+		{
+			"key": "host",
+			"value": "http://localhost:8080",
+			"type": "string"
 		}
 	]
 }
