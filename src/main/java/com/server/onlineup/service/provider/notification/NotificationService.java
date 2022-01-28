@@ -1,41 +1,57 @@
 package com.server.onlineup.service.provider.notification;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
+import com.server.onlineup.model.entity.NotificationEntity;
+import com.server.onlineup.repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class NotificationService {
-    @Bean
-    FirebaseMessaging getFirebaseMessaging() throws IOException {
-        GoogleCredentials googleCredentials = GoogleCredentials
-                .fromStream(new ClassPathResource("firebase-service-account.json").getInputStream());
-        FirebaseOptions firebaseOptions = FirebaseOptions
-                .builder()
-                .setCredentials(googleCredentials)
-                .build();
-        FirebaseApp app = FirebaseApp.initializeApp(firebaseOptions, "onLineUp-server");
-        return FirebaseMessaging.getInstance(app);
-    }
-
     @Autowired
     private FirebaseMessaging firebaseMessaging;
 
-    public void sendNotification(Message message, OnMessagedNotification callback) {
-        try {
-            firebaseMessaging.send(message);
-            callback.onSuccess();
-        } catch (FirebaseMessagingException e) {
-            callback.onFail(e);
-        }
+    @Autowired
+    private NotificationRepository notificationRepository;
+
+    public CompletableFuture<Void> sendAsync(Message message, OnMessagedNotification callback) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                firebaseMessaging.send(message);
+                callback.onSuccess();
+            } catch (FirebaseMessagingException e) {
+                callback.onFail(e);
+            } finally {
+                return null;
+            }
+        });
+    }
+
+    public CompletableFuture<Void> sendAsync(Message message) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                firebaseMessaging.send(message);
+            } catch (FirebaseMessagingException e) {
+            } finally {
+                return null;
+            }
+        });
+    }
+
+    public CompletableFuture<Void> saveAsync(NotificationEntity notificationEntity) {
+        return CompletableFuture.supplyAsync(() -> {
+            notificationRepository.saveAsync(notificationEntity).join();
+            return null;
+        });
+    }
+
+    public CompletableFuture<Void> saveAndSendAsync(MessageNotification messageNotification) {
+        CompletableFuture<Void> saveTask = saveAsync(new NotificationEntity(messageNotification));
+        CompletableFuture<Void> sendTask = sendAsync(messageNotification.build());
+        return CompletableFuture.allOf(saveTask, sendTask);
     }
 }

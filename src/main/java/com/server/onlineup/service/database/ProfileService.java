@@ -1,10 +1,16 @@
 package com.server.onlineup.service.database;
 
+import com.server.onlineup.common.constant.AuthenticationEnum;
+import com.server.onlineup.common.exception.APIException;
+import com.server.onlineup.common.response.BaseResponse;
 import com.server.onlineup.model.entity.ProfileEntity;
 import com.server.onlineup.repository.ProfileRepository;
 import com.server.onlineup.security.principal.UserPrincipal;
 import com.server.onlineup.service.implementation.IUserService;
+import com.server.onlineup.service.provider.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,13 +26,19 @@ public class ProfileService implements IUserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JwtService jwtService;
+
+    @Autowired
+    private ProfileService profileService;
+
     @Override
     public Iterable<ProfileEntity> findAll() {
         return profileRepository.findAll();
     }
 
     @Override
-    public Optional<ProfileEntity> findById(int id) {
+    public Optional<ProfileEntity> findById(String id) {
         return profileRepository.findById(id);
     }
 
@@ -37,7 +49,7 @@ public class ProfileService implements IUserService {
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(String id) {
         profileRepository.deleteById(id);
     }
 
@@ -93,7 +105,7 @@ public class ProfileService implements IUserService {
             return false;
         }
         Optional<ProfileEntity> user = profileRepository.findByEmail(email);
-        if (!user.isPresent()) {
+        if (user == null || !user.isPresent()) {
             return false;
         }
         if (user.get().getFb_id().equals(idFb)) {
@@ -101,4 +113,22 @@ public class ProfileService implements IUserService {
         }
         return false;
     }
+
+    public ResponseEntity handleUpdateFcmtoken(String fcm_token) {
+        Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String email = ((UserDetails) user).getUsername();
+        try {
+            Optional<ProfileEntity> UserFromEmail = profileService.findByUsername(email);
+            UserFromEmail.get().setFcmToken(fcm_token);
+            profileRepository.save(UserFromEmail.get());
+        } catch (APIException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return BaseResponse.Builder()
+                .addMessage(AuthenticationEnum.GET_FCM_TOKEN_SUCCESS)
+                .build();
+    }
+
 }
